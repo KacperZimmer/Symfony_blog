@@ -1,0 +1,18 @@
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+main_page:
+    path: /
+    controller: App\Controller\MainPageController::index
+
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+# config/routes.yaml
+
+show_post:
+    path: /post/{id}
+    controller: App\Controller\PostController::show

@@ -12,7 +12,11 @@ app_logout:
     controller: App\Controller\SecurityController::logout
 
 # config/routes.yaml
+#
+#show_post:
+#    path: /post/{id}
+#    controller: App\Controller\PostController::show
 
-show_post:
-    path: /post/{id}
-    controller: App\Controller\PostController::show
+add_post:
+    path: /post/add
+    controller: App\Controller\PostController::add

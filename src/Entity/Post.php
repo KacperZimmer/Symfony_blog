@@ -19,9 +19,6 @@ class Post
     #[ORM\Column(length: 200)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(inversedBy: 'getPosts')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $UserID = null;
 
 
     #[ORM\Column(type: 'json')]
@@ -56,15 +53,23 @@ class Post
         return $this;
     }
 
-    public function getUserID(): ?User
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private ?array $categories = [];
+
+    public function getCategories(): ?array
     {
-        return $this->UserID;
+        return $this->categories;
     }
 
-    public function setUserID(?User $UserID): static
+    public function setCategories(?array $categories): self
     {
-        $this->UserID = $UserID;
+        $this->categories = $categories;
 
         return $this;
     }
+
+
+
 }

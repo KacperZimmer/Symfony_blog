@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kategorie{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Blog</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Strona główna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">O nas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Kontakt</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('category_list') }}">Kategorie <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center my-4">Kategorie</h1>
+
+                {% for category in categories %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ category.name }}</h5>
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-primary">Wyświetl kategorię</a>
+                                <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-secondary">Edytuj kategorię</a>
+                                <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć tę kategorię?');" style="display:inline-block;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-category' ~ category.id) }}">
+                                    <button class="btn btn-danger" type="submit">Usuń kategorię</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Brak dostępnych kategorii do wyświetlenia.</p>
+                {% endfor %}
+
+                <!-- Przycisk do dodawania nowej kategorii -->
+                <div class="text-center mt-4">
+                    <a href="{{ path('category_create') }}" class="btn btn-success">Dodaj nową kategorię</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -38,4 +38,22 @@ post_edit:
 category_list:
     path: /categories
     controller: App\Controller\CategoryController::list
+
+category_edit:
+    path: /category/{id}/edit
+    controller: App\Controller\CategoryController::edit
     methods: [GET]
+
+category_delete:
+    path: /category/{id}/delete
+    controller: App\Controller\CategoryController::delete
+    methods: [POST, DELETE]
+
+category_show:
+    path: /category/{id}
+    controller: App\Controller\CategoryController::show
+
+category_create:
+    path: /category/create
+    controller: App\Controller\CategoryController::create
+    methods: [GET, POST]

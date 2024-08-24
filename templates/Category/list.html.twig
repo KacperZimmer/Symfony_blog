@@ -44,7 +44,6 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ category.name }}</h5>
                             <div class="btn-group" role="group">
-                                <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-primary">Wyświetl kategorię</a>
                                 <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-secondary">Edytuj kategorię</a>
                                 <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć tę kategorię?');" style="display:inline-block;">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete-category' ~ category.id) }}">
@@ -57,9 +56,8 @@
                     <p>Brak dostępnych kategorii do wyświetlenia.</p>
                 {% endfor %}
 
-                <!-- Przycisk do dodawania nowej kategorii -->
                 <div class="text-center mt-4">
-                    <a href="{{ path('category_create') }}" class="btn btn-success">Dodaj nową kategorię</a>
+                    <a href="{{ path('category_new') }}" class="btn btn-success">Dodaj nową kategorię</a>
                 </div>
             </div>
         </div>

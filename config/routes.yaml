@@ -11,11 +11,6 @@ app_logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
 
-# config/routes.yaml
-#
-#show_post:
-#    path: /post/{id}
-#    controller: App\Controller\PostController::show
 
 add_post:
     path: /post/add
@@ -49,11 +44,9 @@ category_delete:
     controller: App\Controller\CategoryController::delete
     methods: [POST, DELETE]
 
-category_show:
-    path: /category/{id}
-    controller: App\Controller\CategoryController::show
 
-category_create:
-    path: /category/create
-    controller: App\Controller\CategoryController::create
+
+category_new:
+    path: /category/news
+    controller: App\Controller\CategoryController::new
     methods: [GET, POST]

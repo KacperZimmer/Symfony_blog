@@ -11,6 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
+
+    /**
+     * @Route("/post/{id}", name="post_show")
+     */
+    public function show(Post $post): Response
+    {
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+        ]);
+    }
     /**
      * @Route("/post/add", name="add_post")
      */

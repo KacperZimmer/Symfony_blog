@@ -23,7 +23,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
                     </li>
@@ -42,7 +41,11 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.content|slice(0, 100) }}...</p>
-{#                            <a href="{{ path('show_post', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>#}
+                            <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>
+
+                            <!-- Przyciski Edytuj i Usuń bez przypisanych akcji -->
+                            <a href="#" class="btn btn-secondary">Edytuj</a>
+                            <button class="btn btn-danger" type="button">Usuń</button>
                         </div>
                     </div>
                 {% else %}

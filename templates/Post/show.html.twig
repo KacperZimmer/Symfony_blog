@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.content }}</p>
+
+                <a href="{{ path('main_page') }}" class="btn btn-secondary">Powrót do listy postów</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

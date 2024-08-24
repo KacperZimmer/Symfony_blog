@@ -34,3 +34,8 @@ post_edit:
     path: /post/{id}/edit
     controller: App\Controller\PostController::edit
     methods: [GET, POST]
+
+category_list:
+    path: /categories
+    controller: App\Controller\CategoryController::list
+    methods: [GET]

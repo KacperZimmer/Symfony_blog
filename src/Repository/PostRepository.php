@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    public const PAGINATOR_ITEMS_PER_PAGE = 1;
+    public const PAGINATOR_ITEMS_PER_PAGE = 3;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Post::class);

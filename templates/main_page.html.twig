@@ -21,6 +21,9 @@
                         <a class="nav-link" href="#">Kontakt</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#">Kategorie</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
                     </li>
                     <li class="nav-item">
@@ -43,10 +46,8 @@
                             <p class="card-text">{{ post.content|slice(0, 100) }}...</p>
                             <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>
 
-                            <!-- Przyciski Edytuj i Usuń -->
                             <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
 
-                            <!-- Formularz usuwania posta -->
                             <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
                                 <button class="btn btn-danger" type="submit">Usuń</button>
@@ -57,7 +58,6 @@
                     <p>Brak dostępnych postów do wyświetlenia.</p>
                 {% endfor %}
 
-                <!-- Renderowanie dynamicznej paginacji -->
                 <div class="navigation text-center">
                     {{ knp_pagination_render(pagination) }}
                 </div>

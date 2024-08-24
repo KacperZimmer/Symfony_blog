@@ -24,3 +24,13 @@ add_post:
 post_show:
     path: /post/{id}
     controller: App\Controller\PostController::show
+
+post_delete:
+    path: /post/delete/{id}
+    controller: App\Controller\PostController::delete
+    methods: [POST, DELETE]
+
+post_edit:
+    path: /post/{id}/edit
+    controller: App\Controller\PostController::edit
+    methods: [GET, POST]

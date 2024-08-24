@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ post ? 'Edytuj Post' : 'Utwórz Post' }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>{{ post ? 'Edytuj Post' : 'Utwórz Nowy Post' }}</h1>
+
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.content) }}
+            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.content) }}
+        </div>
+
+        <div class="form-group mt-3">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+        {{ form_end(form) }}
+
+        <a href="{{ path('main_page') }}" class="btn btn-secondary mt-3">Powrót do listy postów</a>
+    </div>
+{% endblock %}

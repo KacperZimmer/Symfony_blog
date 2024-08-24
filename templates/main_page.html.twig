@@ -43,9 +43,14 @@
                             <p class="card-text">{{ post.content|slice(0, 100) }}...</p>
                             <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>
 
-                            <!-- Przyciski Edytuj i Usuń bez przypisanych akcji -->
-                            <a href="#" class="btn btn-secondary">Edytuj</a>
-                            <button class="btn btn-danger" type="button">Usuń</button>
+                            <!-- Przyciski Edytuj i Usuń -->
+                            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
+
+                            <!-- Formularz usuwania posta -->
+                            <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                                <button class="btn btn-danger" type="submit">Usuń</button>
+                            </form>
                         </div>
                     </div>
                 {% else %}

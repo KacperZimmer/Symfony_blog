@@ -21,8 +21,7 @@ class Post
 
 
 
-    #[ORM\Column(type: 'json')]
-    private array $tags = [];
+
 
     public function getId(): ?int
     {

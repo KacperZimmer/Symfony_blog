@@ -37,16 +37,16 @@ category_list:
 category_edit:
     path: /category/{id}/edit
     controller: App\Controller\CategoryController::edit
-    methods: [GET]
+    methods: [GET,POST]
 
 category_delete:
     path: /category/{id}/delete
     controller: App\Controller\CategoryController::delete
     methods: [POST, DELETE]
 
-
-
 category_new:
     path: /category/news
     controller: App\Controller\CategoryController::new
     methods: [GET, POST]
+
+

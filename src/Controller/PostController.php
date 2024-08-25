@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id}", name="post_show")
      */
+    #[Route('/post/{id}', name: 'post_show', methods: ['GET'])]
     public function show(Post $post): Response
     {
         return $this->render('post/show.html.twig', [
@@ -21,10 +23,8 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/post/add", name="add_post")
-     */
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/post/add', name: 'post_add', methods: ['GET', 'POST'])]
+    public function add(Request $request, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -32,10 +32,16 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Pobierz wybrane kategorie i przypisz je do posta
+            $categories = $form->get('categories')->getData();
+            foreach ($categories as $category) {
+                $post->addCategory($category);
+            }
+
             $entityManager->persist($post);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Post został dodany pomyślnie.');
+            $this->addFlash('success', 'Post został utworzony pomyślnie.');
 
             return $this->redirectToRoute('main_page');
         }
@@ -59,10 +65,7 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('main_page');
     }
-    /**
-     * @Route("/post/edit/{id}", name="edit_post")
-     */
-    // Metoda edytowania posta
+
     /**
      * @Route("/post/{id}/edit", name="post_edit")
      */

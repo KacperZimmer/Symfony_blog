@@ -1,15 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.Title }}{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1>{{ post.title }}</h1>
+                <h1>{{ post.Title }}</h1>
                 <p>{{ post.content }}</p>
 
-                <a href="{{ path('main_page') }}" class="btn btn-secondary">Powrót do listy postów</a>
+                {% if post.categories is not empty %}
+                    <h3>Kategorie:</h3>
+                    <ul>
+                        {% for category in post.categories %}
+                            <li>{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Brak kategorii przypisanych do tego posta.</p>
+                {% endif %}
+
+                <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
+
+                <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                    <button class="btn btn-danger" type="submit">Usuń</button>
+                </form>
+
+                <a href="{{ path('main_page') }}" class="btn btn-primary">Powrót do listy</a>
             </div>
         </div>
     </div>

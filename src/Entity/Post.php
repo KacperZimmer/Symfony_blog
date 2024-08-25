@@ -1,9 +1,11 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Category;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -19,9 +21,14 @@ class Post
     #[ORM\Column(length: 200)]
     private ?string $content = null;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
+    #[ORM\JoinTable(name: 'post_category')]
+    private Collection $categories;
 
-
-
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,22 +60,26 @@ class Post
     }
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @return Collection<int, Category>
      */
-    private ?array $categories = [];
-
-    public function getCategories(): ?array
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-    public function setCategories(?array $categories): self
+    public function addCategory(Category $category): self
     {
-        $this->categories = $categories;
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
 
         return $this;
     }
 
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
-
+        return $this;
+    }
 }

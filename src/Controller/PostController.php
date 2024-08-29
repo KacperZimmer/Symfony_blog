@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,14 +14,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    /**
-     * @Route("/post/{id}", name="post_show")
-     */
-    #[Route('/post/{id}', name: 'post_show', methods: ['GET'])]
-    public function show(Post $post): Response
+    #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+        $comment = new Comment();
+        $comment->setPost($post);
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Comment added successfully.');
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'commentForm' => $form->createView(),
         ]);
     }
 

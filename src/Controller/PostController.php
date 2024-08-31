@@ -17,10 +17,11 @@ class PostController extends AbstractController
     #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+//        dd($this->getUser()->getRoles());
         $comment = new Comment();
         $comment->setPost($post);
-        $form = $this->createForm(CommentType::class, $comment);
 
+        $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,6 +31,12 @@ class PostController extends AbstractController
             $this->addFlash('success', 'Comment added successfully.');
 
             return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
+        if ($this->isGranted('role_admin')) {
+            dump('Użytkownik ma rolę ROLE_ADMI');
+        } else {
+            dump('Użytkownik NIE ma roli ROLE_ADIN');
         }
 
         return $this->render('post/show.html.twig', [

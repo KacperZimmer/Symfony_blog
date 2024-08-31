@@ -49,4 +49,8 @@ category_new:
     controller: App\Controller\CategoryController::new
     methods: [GET, POST]
 
+comment_delete:
+    path: /comment/delete/{id}
+    controller: App\Controller\CommentController::delete
+    methods: [POST]
 

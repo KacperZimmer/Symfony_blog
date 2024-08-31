@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.Title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1>{{ post.Title }}</h1>
+                <h1>{{ post.title }}</h1>
                 <p>{{ post.content }}</p>
 
                 {% if post.categories is not empty %}
@@ -20,6 +20,31 @@
                     <p>Brak kategorii przypisanych do tego posta.</p>
                 {% endif %}
 
+                <h3>Komentarze:</h3>
+                <ul>
+                    {% for comment in post.comments %}
+                        <li>
+                            <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten komentarz?');" style="display:inline-block;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
+                                    <button class="btn btn-danger btn-sm" type="submit">Usuń</button>
+                                </form>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Dodaj Komentarz:</h3>
+                {{ form_start(commentForm) }}
+                {{ form_row(commentForm.nick, {'label': 'Nick'}) }}
+                {{ form_row(commentForm.email, {'label': 'Email'}) }}
+                {{ form_row(commentForm.content, {'label': 'Treść'}) }}
+                <button class="btn btn-primary" type="submit">Dodaj Komentarz</button>
+                {{ form_end(commentForm) }}
+
+                <hr>
+
                 <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
 
                 <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
@@ -28,29 +53,6 @@
                 </form>
 
                 <a href="{{ path('main_page') }}" class="btn btn-primary">Powrót do listy</a>
-
-                <hr>
-
-                <h3>Dodaj komentarz:</h3>
-                {{ form_start(commentForm) }}
-                {{ form_widget(commentForm) }}
-                {{ form_end(commentForm) }}
-
-                <hr>
-
-                <h3>Komentarze:</h3>
-                {% if post.comments is not empty %}
-                    <ul>
-                        {% for comment in post.comments %}
-                            <li>
-                                <strong>{{ comment.nick }} ({{ comment.email }}):</strong>
-                                <p>{{ comment.content }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Brak komentarzy do tego posta.</p>
-                {% endif %}
             </div>
         </div>
     </div>

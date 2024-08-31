@@ -44,14 +44,16 @@
                 {{ form_end(commentForm) }}
 
                 <hr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
+                {% endif %}
 
-                <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
-
-                <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-                    <button class="btn btn-danger" type="submit">Usuń</button>
-                </form>
-
+                {% if is_granted('ROLE_ADMIN') %}
+                    <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                        <button class="btn btn-danger" type="submit">Usuń</button>
+                    </form>
+                {% endif %}
                 <a href="{{ path('main_page') }}" class="btn btn-primary">Powrót do listy</a>
             </div>
         </div>

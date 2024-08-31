@@ -20,15 +20,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Kontakt</a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('category_list') }}">Kategorie</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
-                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">Zaloguj</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -46,12 +56,14 @@
                             <p class="card-text">{{ post.content|slice(0, 100) }}...</p>
                             <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>
 
-                            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
 
-                            <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-                                <button class="btn btn-danger" type="submit">Usuń</button>
-                            </form>
+                                <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                                    <button class="btn btn-danger" type="submit">Usuń</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 {% else %}

@@ -54,3 +54,7 @@ comment_delete:
     controller: App\Controller\CommentController::delete
     methods: [POST]
 
+post_list:
+    path: /posts
+    controller: App\Controller\PostController::list
+    methods: [GET]

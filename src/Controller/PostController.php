@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\CategoryRepository;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
+
+
+
+
 {
     #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Post $post, EntityManagerInterface $entityManager): Response
@@ -54,7 +59,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Pobierz wybrane kategorie i przypisz je do posta
+
             $categories = $form->get('categories')->getData();
             foreach ($categories as $category) {
                 $post->addCategory($category);
@@ -108,6 +113,25 @@ class PostController extends AbstractController
         return $this->render('post/edit.html.twig', [
             'post' => $post,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/posts', name: 'post_list', methods: ['GET'])]
+    public function list(Request $request, PostRepository $postRepository, CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->findAll();
+
+        $posts = $postRepository->findAll();
+
+        $selectedCategory = $request->query->get('category');
+        if ($selectedCategory) {
+            $posts = $postRepository->findByCategory($selectedCategory);
+        }
+
+        return $this->render('post/list.html.twig', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'selectedCategory' => $selectedCategory,
         ]);
     }
 }

@@ -58,3 +58,7 @@ post_list:
     path: /posts
     controller: App\Controller\PostController::list
     methods: [GET]
+
+admin_edit_user:
+    path: /admin/edit-user
+    controller: App\Controller\MainPageController::editUser

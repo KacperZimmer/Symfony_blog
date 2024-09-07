@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +12,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,10 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class MainPageController extends AbstractController
 {
     private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    private UserPasswordHasherInterface $passwordHasher;
+    public function __construct(EntityManagerInterface $entityManager,UserPasswordHasherInterface $passwordHasher)
     {
         $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
     }
 
     /**
@@ -32,7 +36,6 @@ class MainPageController extends AbstractController
         CategoryRepository $categoryRepository,
         PaginatorInterface $paginator
     ): Response {
-        // Formularz wyszukiwania
         $categories = $categoryRepository->findAll();
         $categoryChoices = [];
 
@@ -44,7 +47,7 @@ class MainPageController extends AbstractController
             ->add('category', ChoiceType::class, [
                 'choices' => $categoryChoices,
                 'choice_label' => function ($choice, $key, $value) {
-                    return $key; // Display category name
+                    return $key;
                 },
                 'required' => false,
                 'placeholder' => 'Wybierz kategorię',
@@ -55,8 +58,7 @@ class MainPageController extends AbstractController
         $form->handleRequest($request);
         $categoryId = $form->get('category')->getData();
 
-        // Pobierz posty według kategorii
-        $queryBuilder = $postRepository->createQueryBuilder('p');
+        $queryBuilder = $postRepository->queryAll();
 
         if ($categoryId) {
             $queryBuilder
@@ -67,7 +69,6 @@ class MainPageController extends AbstractController
 
         $query = $queryBuilder->getQuery();
 
-        // Paginacja
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -76,6 +77,41 @@ class MainPageController extends AbstractController
 
         return $this->render('main_page.html.twig', [
             'pagination' => $pagination,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/admin/user/edit", name="admin_user_edit")
+     */
+    public function editUser(Request $request): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied.');
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $user->getPlainPassword();
+            if ($plainPassword) {
+                $encodedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($encodedPassword);
+            }
+
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Dane użytkownika zostały zaktualizowane.');
+
+            return $this->redirectToRoute('main_page');
+        }
+
+        return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

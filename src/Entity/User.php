@@ -55,6 +55,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @var string|null
      */
+
+
+    private ?string $plainPassword = null;
+
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     private ?string $password;
@@ -231,6 +235,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
         return $this;
     }
 }

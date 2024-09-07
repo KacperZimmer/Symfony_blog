@@ -22,7 +22,6 @@ class PostController extends AbstractController
     #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-//        dd($this->getUser()->getRoles());
         $comment = new Comment();
         $comment->setPost($post);
 

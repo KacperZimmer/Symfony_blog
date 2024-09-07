@@ -28,7 +28,7 @@ class CommentType extends AbstractType
                 'attr' => ['placeholder' => 'Enter your comment']
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Add Comment'
+                'label' => 'Dodaj Komentarz'
             ]);
     }
 

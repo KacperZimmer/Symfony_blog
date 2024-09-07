@@ -9,52 +9,73 @@
                 <h1>{{ post.title }}</h1>
                 <p>{{ post.content }}</p>
 
-                {% if post.categories is not empty %}
-                    <h3>Kategorie:</h3>
-                    <ul>
-                        {% for category in post.categories %}
-                            <li>{{ category.name }}</li>
+                <div class="mb-4">
+                    <!-- Button to toggle categories -->
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesCollapse">
+                        Kategorie <i class="fas fa-plus"></i>
+                    </button>
+                    <div id="categoriesCollapse" class="collapse mt-2">
+                        {% if post.categories|length > 0 %}
+                            <ul class="list-group">
+                                {% for category in post.categories %}
+                                    <li class="list-group-item">{{ category.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Brak kategorii przypisanych do tego posta.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <!-- Button to toggle comments form -->
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#commentsFormCollapse">
+                        Dodaj Komentarz <i class="fas fa-plus"></i>
+                    </button>
+                    <div id="commentsFormCollapse" class="collapse mt-2">
+                        {{ form_start(commentForm) }}
+                        <div class="mb-3">
+                            {{ form_row(commentForm.nick, {'label': 'Nick'}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(commentForm.email, {'label': 'Email'}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(commentForm.content, {'label': 'Treść'}) }}
+                        </div>
+                        {{ form_end(commentForm) }}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3>Komentarze:</h3>
+                    <ul class="list-group">
+                        {% for comment in post.comments %}
+                            <li class="list-group-item">
+                                <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten komentarz?');" style="display:inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
+                                        <button class="btn btn-danger btn-sm ml-2" type="submit">Usuń</button>
+                                    </form>
+                                {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
-                {% else %}
-                    <p>Brak kategorii przypisanych do tego posta.</p>
-                {% endif %}
-
-                <h3>Komentarze:</h3>
-                <ul>
-                    {% for comment in post.comments %}
-                        <li>
-                            <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten komentarz?');" style="display:inline-block;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
-                                    <button class="btn btn-danger btn-sm" type="submit">Usuń</button>
-                                </form>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <h3>Dodaj Komentarz:</h3>
-                {{ form_start(commentForm) }}
-                {{ form_row(commentForm.nick, {'label': 'Nick'}) }}
-                {{ form_row(commentForm.email, {'label': 'Email'}) }}
-                {{ form_row(commentForm.content, {'label': 'Treść'}) }}
-                <button class="btn btn-primary" type="submit">Dodaj Komentarz</button>
-                {{ form_end(commentForm) }}
+                </div>
 
                 <hr>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
-                {% endif %}
 
-                {% if is_granted('ROLE_ADMIN') %}
-                    <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-                        <button class="btn btn-danger" type="submit">Usuń</button>
-                    </form>
-                {% endif %}
-                <a href="{{ path('main_page') }}" class="btn btn-primary">Powrót do listy</a>
+                <div class="mb-4">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary mr-2">Edytuj</a>
+                        <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                            <button class="btn btn-danger" type="submit">Usuń</button>
+                        </form>
+                    {% endif %}
+                    <a href="{{ path('main_page') }}" class="btn btn-primary">Powrót do listy</a>
+                </div>
             </div>
         </div>
     </div>

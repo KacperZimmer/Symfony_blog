@@ -1,38 +1,41 @@
 <?php
-
+// src/Controller/MainPageController.php
 namespace App\Controller;
 
-use App\Entity\Post;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use App\Service\PostServiceInterface;
+use App\Service\UserServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MainPageController extends AbstractController
 {
-    private $entityManager;
-    private UserPasswordHasherInterface $passwordHasher;
-    public function __construct(EntityManagerInterface $entityManager,UserPasswordHasherInterface $passwordHasher)
-    {
+    private EntityManagerInterface $entityManager;
+    private UserServiceInterface $userService;
+    private PostServiceInterface $postService;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserServiceInterface $userService,
+        PostServiceInterface $postService
+    ) {
         $this->entityManager = $entityManager;
-        $this->passwordHasher = $passwordHasher;
+        $this->userService = $userService;
+        $this->postService = $postService;
     }
 
-    /**
-     * @Route("/", name="main_page")
-     */
+    #[Route('/', name: 'main_page')]
     public function index(
         Request $request,
-        PostRepository $postRepository,
         CategoryRepository $categoryRepository,
         PaginatorInterface $paginator
     ): Response {
@@ -58,14 +61,7 @@ class MainPageController extends AbstractController
         $form->handleRequest($request);
         $categoryId = $form->get('category')->getData();
 
-        $queryBuilder = $postRepository->queryAll();
-
-        if ($categoryId) {
-            $queryBuilder
-                ->leftJoin('p.categories', 'c')
-                ->andWhere('c.id = :categoryId')
-                ->setParameter('categoryId', $categoryId);
-        }
+        $queryBuilder = $this->postService->getQueryBuilderForAllPosts($categoryId);
 
         $query = $queryBuilder->getQuery();
 
@@ -81,11 +77,7 @@ class MainPageController extends AbstractController
         ]);
     }
 
-
-
-    /**
-     * @Route("/admin/user/edit", name="admin_user_edit")
-     */
+    #[Route('/admin/user/edit', name: 'admin_user_edit')]
     public function editUser(Request $request): Response
     {
         $user = $this->getUser();
@@ -98,13 +90,7 @@ class MainPageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $user->getPlainPassword();
-            if ($plainPassword) {
-                $encodedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($encodedPassword);
-            }
-
-            $this->entityManager->flush();
+            $this->userService->updateUser($user);
 
             $this->addFlash('success', 'Dane użytkownika zostały zaktualizowane.');
 
@@ -116,3 +102,4 @@ class MainPageController extends AbstractController
         ]);
     }
 }
+

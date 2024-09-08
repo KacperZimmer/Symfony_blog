@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <!-- Existing translations -->
+      <trans-unit id="title.welcome_blog">
+        <source>title.welcome_blog</source>
+        <target>Welcome to the blog</target>
+      </trans-unit>
+      <trans-unit id="menu.blog">
+        <source>menu.blog</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="navbar.toggle_navigation">
+        <source>navbar.toggle_navigation</source>
+        <target>Toggle navigation</target>
+      </trans-unit>
+      <trans-unit id="menu.home">
+        <source>menu.home</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="menu.current">
+        <source>menu.current</source>
+        <target>Current</target>
+      </trans-unit>
+      <trans-unit id="menu.categories">
+        <source>menu.categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="menu.create_post">
+        <source>menu.create_post</source>
+        <target>Create Post</target>
+      </trans-unit>
+      <trans-unit id="menu.edit_profile">
+        <source>menu.edit_profile</source>
+        <target>Edit Profile</target>
+      </trans-unit>
+      <trans-unit id="menu.logout">
+        <source>menu.logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="menu.login">
+        <source>menu.login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="header.welcome_blog">
+        <source>header.welcome_blog</source>
+        <target>Welcome to our blog</target>
+      </trans-unit>
+      <trans-unit id="button.read_more">
+        <source>button.read_more</source>
+        <target>Read More</target>
+      </trans-unit>
+      <trans-unit id="button.edit">
+        <source>button.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="confirm.delete_post">
+        <source>confirm.delete_post</source>
+        <target>Are you sure you want to delete this post?</target>
+      </trans-unit>
+      <trans-unit id="button.delete">
+        <source>button.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="message.no_posts">
+        <source>message.no_posts</source>
+        <target>No posts</target>
+      </trans-unit>
+      <!-- New translations for category template -->
+      <trans-unit id="title.category_list">
+        <source>title.category_list</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="category.edit">
+        <source>category.edit</source>
+        <target>Edit Category</target>
+      </trans-unit>
+      <trans-unit id="category.delete_confirmation">
+        <source>category.delete_confirmation</source>
+        <target>Are you sure you want to delete this category?</target>
+      </trans-unit>
+      <trans-unit id="category.delete">
+        <source>category.delete</source>
+        <target>Delete Category</target>
+      </trans-unit>
+      <trans-unit id="category.no_categories">
+        <source>category.no_categories</source>
+        <target>No categories available.</target>
+      </trans-unit>
+      <trans-unit id="category.add_new">
+        <source>category.add_new</source>
+        <target>Add New Category</target>
+      </trans-unit>
+      <trans-unit id="title.edit_category">
+        <source>title.edit_category</source>
+        <target>Edit Category</target>
+      </trans-unit>
+      <trans-unit id="button.save_changes">
+        <source>button.save_changes</source>
+        <target>Save Changes</target>
+      </trans-unit>
+      <trans-unit id="category.add_new.title">
+        <source>category.add_new.title</source>
+        <target>Add New Category</target>
+      </trans-unit>
+      <trans-unit id="category.add_new.button">
+        <source>category.add_new.button</source>
+        <target>Add Category</target>
+      </trans-unit>
+      <trans-unit id="form.label.name">
+        <source>form.label.name</source>
+        <target>Category Name</target>
+      </trans-unit>
+      <trans-unit id="form.placeholder.name">
+        <source>form.placeholder.name</source>
+        <target>Enter category name</target>
+      </trans-unit>
+      <!-- New translations for post form -->
+      <trans-unit id="post.add.title">
+        <source>post.add.title</source>
+        <target>Add Post</target>
+      </trans-unit>
+      <trans-unit id="post.add.heading">
+        <source>post.add.heading</source>
+        <target>Add New Post</target>
+      </trans-unit>
+      <trans-unit id="form.label.title">
+        <source>form.label.title</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="form.placeholder.title">
+        <source>form.placeholder.title</source>
+        <target>Enter post title</target>
+      </trans-unit>
+      <trans-unit id="form.label.content">
+        <source>form.label.content</source>
+        <target>Content</target>
+      </trans-unit>
+      <trans-unit id="form.placeholder.content">
+        <source>form.placeholder.content</source>
+        <target>Enter post content</target>
+      </trans-unit>
+      <trans-unit id="form.label.categories">
+        <source>form.label.categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="post.add.save_button">
+        <source>post.add.save_button</source>
+        <target>Save Post</target>
+      </trans-unit>
+      <trans-unit id="form.button.save">
+        <source>form.button.save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="post.view.categories">
+        <source>post.view.categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="post.add_comment">
+        <source>post.add_comment</source>
+        <target>Add Comment</target>
+      </trans-unit>
+      <trans-unit id="button.return_to_list">
+        <source>button.return_to_list</source>
+        <target>Back to list</target>
+      </trans-unit>
+      <trans-unit id="form.placeholder.nick">
+        <source>form.placeholder.nick</source>
+        <target>Enter your nickname</target>
+      </trans-unit>
+      <trans-unit id="form.placeholder.email">
+        <source>form.placeholder.email</source>
+        <target>Enter your email</target>
+      </trans-unit>
+      <trans-unit id="form.label.nick">
+        <source>form.label.nick</source>
+        <target>Nickname</target>
+      </trans-unit>
+      <trans-unit id="form.label.email">
+        <source>form.label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="button.add_comment">
+        <source>button.add_comment</source>
+        <target>Add Comment</target>
+      </trans-unit>
+
+
+ <trans-unit id="form.label.plainPassword">
+        <source>form.label.plainPassword</source>
+        <target>New Password</target>
+      </trans-unit>
+
+       <trans-unit id="user.edit.heading">
+              <source>user.edit.heading</source>
+              <target>Change Admin Data</target>
+            </trans-unit>
+
+
+    </body>
+  </file>
+</xliff>

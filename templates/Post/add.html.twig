@@ -1,14 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dodaj Post{% endblock %}
+{% block title %}
+    {{ 'post.add.title'|trans }}
+{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="text-center">Dodaj Nowy Post</h1>
+    <div class="container">
+        <h1 class="my-4">{{ 'post.add.heading'|trans }}</h1>
 
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Dodaj Post</button>
+        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.title, 'form.label.title'|trans) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'form.placeholder.title'|trans}}) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.content, 'form.label.content'|trans) }}
+            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'form.placeholder.content'|trans}}) }}
+            {{ form_errors(form.content) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.categories, 'form.label.categories'|trans) }}
+            {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.categories) }}
+        </div>
+
+
         {{ form_end(form) }}
     </div>
 {% endblock %}

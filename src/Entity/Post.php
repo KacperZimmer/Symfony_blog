@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -19,10 +20,18 @@ class Post
     #[ORM\Column(length: 200)]
     private ?string $content = null;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
+    #[ORM\JoinTable(name: 'post_category')]
+    private Collection $categories;
 
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $comments;
 
-    #[ORM\Column(type: 'json')]
-    private array $tags = [];
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -54,22 +63,55 @@ class Post
     }
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @return Collection<int, Category>
      */
-    private ?array $categories = [];
-
-    public function getCategories(): ?array
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-    public function setCategories(?array $categories): self
+    public function addCategory(Category $category): self
     {
-        $this->categories = $categories;
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
 
         return $this;
     }
 
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
+        return $this;
+    }
 
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -49,4 +49,16 @@ category_new:
     controller: App\Controller\CategoryController::new
     methods: [GET, POST]
 
+comment_delete:
+    path: /comment/delete/{id}
+    controller: App\Controller\CommentController::delete
+    methods: [POST]
 
+post_list:
+    path: /posts
+    controller: App\Controller\PostController::list
+    methods: [GET]
+
+admin_edit_user:
+    path: /admin/edit-user
+    controller: App\Controller\MainPageController::editUser

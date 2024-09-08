@@ -1,45 +1,41 @@
 <?php
 namespace App\Form;
 
-use App\Entity\Post;
-use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class PostType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                'label' => 'form.label.title',
-                'attr' => ['placeholder' => 'form.placeholder.title']
+            ->add('email', EmailType::class, [
+                'label' => 'form.label.email',
+                'attr' => ['placeholder' => 'form.placeholder.email']
+            ])
+            ->add('nick', TextType::class, [
+                'label' => 'form.label.nick',
+                'attr' => ['placeholder' => 'form.placeholder.nick']
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'form.label.content',
                 'attr' => ['placeholder' => 'form.placeholder.content']
             ])
-            ->add('categories', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'label' => 'form.label.categories'
-            ])
             ->add('save', SubmitType::class, [
-                'label' => 'form.button.save'
+                'label' => 'button.add_comment'
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

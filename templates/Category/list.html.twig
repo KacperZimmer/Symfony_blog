@@ -1,33 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Kategorie{% endblock %}
+{% block title %}
+    {{ 'title.category_list'|trans }}
+{% endblock %}
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">{{ 'menu.blog'|trans }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="{{ 'navbar.toggle_navigation'|trans }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('main_page') }}">Strona główna <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('main_page') }}">{{ 'menu.home'|trans }} <span class="sr-only">({{ 'menu.current'|trans }})</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">O nas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Kontakt</a>
-                    </li>
+
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('category_list') }}">Kategorie <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('category_list') }}">{{ 'menu.categories'|trans }} <span class="sr-only">({{ 'menu.current'|trans }})</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
+                        <a class="nav-link" href="{{ path('add_post') }}">{{ 'menu.create_post'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
                     </li>
                 </ul>
             </div>
@@ -37,27 +34,27 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center my-4">Kategorie</h1>
+                <h1 class="text-center my-4">{{ 'title.category_list'|trans }}</h1>
 
                 {% for category in categories %}
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">{{ category.name }}</h5>
                             <div class="btn-group" role="group">
-                                <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-secondary">Edytuj kategorię</a>
-                                <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć tę kategorię?');" style="display:inline-block;">
+                                <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-secondary">{{ 'category.edit'|trans }}</a>
+                                <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('{{ 'category.delete_confirmation'|trans }}');" style="display:inline-block;">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete-category' ~ category.id) }}">
-                                    <button class="btn btn-danger" type="submit">Usuń kategorię</button>
+                                    <button class="btn btn-danger" type="submit">{{ 'category.delete'|trans }}</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 {% else %}
-                    <p>Brak dostępnych kategorii do wyświetlenia.</p>
+                    <p>{{ 'category.no_categories'|trans }}</p>
                 {% endfor %}
 
                 <div class="text-center mt-4">
-                    <a href="{{ path('category_new') }}" class="btn btn-success">Dodaj nową kategorię</a>
+                    <a href="{{ path('category_new') }}" class="btn btn-success">{{ 'category.add_new'|trans }}</a>
                 </div>
             </div>
         </div>

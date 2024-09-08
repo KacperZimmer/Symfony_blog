@@ -17,22 +17,22 @@ class PostType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Title',
-                'attr' => ['placeholder' => 'Enter post title']
+                'label' => 'form.label.title',
+                'attr' => ['placeholder' => 'form.placeholder.title']
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Content',
-                'attr' => ['placeholder' => 'Enter post content']
+                'label' => 'form.label.content',
+                'attr' => ['placeholder' => 'form.placeholder.content']
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'Categories'
+                'label' => 'form.label.categories'
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Save Post'
+                'label' => 'form.button.save'
             ]);
     }
 
@@ -43,5 +43,3 @@ class PostType extends AbstractType
         ]);
     }
 }
-
-

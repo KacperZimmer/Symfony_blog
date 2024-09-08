@@ -2,16 +2,18 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Edytuj Użytkownika{% endblock %}
+{% block title %}
+    {{ 'title.edit_user'|trans }}
+{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Edytuj dane użytkownika</h1>
+        <h1>{{ 'user.edit.heading'|trans }}</h1>
 
         {{ form_start(form) }}
         {{ form_row(form.email) }}
         {{ form_row(form.plainPassword) }}
-        <button class="btn btn-primary" type="submit">Zapisz zmiany</button>
+        <button class="btn btn-primary" type="submit">{{ 'form.button.save'|trans }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

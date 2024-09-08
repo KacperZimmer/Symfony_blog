@@ -16,19 +16,19 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Email',
-                'attr' => ['placeholder' => 'Enter your email']
+                'label' => 'form.label.email',
+                'attr' => ['placeholder' => 'form.placeholder.email']
             ])
             ->add('nick', TextType::class, [
-                'label' => 'Nick',
-                'attr' => ['placeholder' => 'Enter your nickname']
+                'label' => 'form.label.nick',
+                'attr' => ['placeholder' => 'form.placeholder.nick']
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Content',
-                'attr' => ['placeholder' => 'Enter your comment']
+                'label' => 'form.label.content',
+                'attr' => ['placeholder' => 'form.placeholder.content']
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Dodaj Komentarz'
+                'label' => 'button.add_comment'
             ]);
     }
 

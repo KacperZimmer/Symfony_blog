@@ -6,7 +6,6 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,17 +16,16 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'form.label.email',
                 'attr' => ['class' => 'form-control'],
             ])
-
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Nowe hasło (pozostaw puste, jeśli nie chcesz zmieniać)',
+                'label' => 'form.label.plainPassword',
                 'required' => false,
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Zapisz zmiany',
+                'label' => 'form.button.save',
                 'attr' => ['class' => 'btn btn-primary mt-3'],
             ]);
     }

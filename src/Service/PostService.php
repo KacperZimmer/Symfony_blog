@@ -1,6 +1,7 @@
 <?php
 
 // src/Service/PostService.php
+
 namespace App\Service;
 
 use App\Entity\Post;
@@ -13,7 +14,6 @@ class PostService implements PostServiceInterface
 {
     private PostRepository $postRepository;
     private EntityManagerInterface $entityManager;
-
 
     public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
     {
@@ -33,13 +33,12 @@ class PostService implements PostServiceInterface
         $this->entityManager->flush();
     }
 
-
     public function updatePost(Post $post): void
     {
         $this->entityManager->flush();
     }
 
-    public function getAllPosts(int $categoryId = null): Query
+    public function getAllPosts(?int $categoryId = null): Query
     {
         $queryBuilder = $this->postRepository->queryAll();
 
@@ -53,7 +52,7 @@ class PostService implements PostServiceInterface
         return $queryBuilder->getQuery();
     }
 
-    public function getQueryBuilderForAllPosts(int $categoryId = null): QueryBuilder
+    public function getQueryBuilderForAllPosts(?int $categoryId = null): QueryBuilder
     {
         $queryBuilder = $this->postRepository->queryAll();
 

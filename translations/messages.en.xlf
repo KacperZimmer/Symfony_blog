@@ -197,7 +197,36 @@
               <target>Change Admin Data</target>
             </trans-unit>
 
+         <trans-unit id="login.sign_in">
+              <source>login.sign_in</source>
+              <target>Login</target>
+            </trans-unit>
+    <trans-unit id="login.password">
+              <source>login.password</source>
+              <target>Password</target>
+            </trans-unit>
 
+                <trans-unit id="login.email">
+                          <source>login.email</source>
+                          <target>Email</target>
+                        </trans-unit>
+    <trans-unit id="login.remember_me">
+                          <source>login.remember_me</source>
+                          <target>Remember me</target>
+                        </trans-unit>
+   <trans-unit id="login.sign_in_button">
+                          <source>login.sign_in_button</source>
+                          <target>Log in</target>
+                        </trans-unit>
+
+                           <trans-unit id="login.error">
+                                                  <source>login.error</source>
+                                                  <target>Login failed</target>
+                                                </trans-unit>
+           <trans-unit id="post.comments">
+                                                                     <source>post.comments</source>
+                                                                     <target>comments</target>
+                                                                   </trans-unit>
     </body>
   </file>
 </xliff>

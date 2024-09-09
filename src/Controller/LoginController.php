@@ -14,12 +14,11 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-        public function login(Request $request): Response
-        {
-            if ($this->getUser()) {
-                return $this->redirectToRoute('home');
-            }
-
+    public function login(Request $request): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
         return $this->render('login/login.html.twig', [
         ]);

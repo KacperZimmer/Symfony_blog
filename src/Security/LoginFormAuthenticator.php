@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Login form authenticator.
  */
@@ -68,7 +69,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
      *
      * The passport contains the user, credentials and any additional information
      * that has to be checked by the Symfony Security system. For example, a login
-     * form authenticator will probably return a passport containing the user, the
+     * form authenticator w
+     * ill probably return a passport containing the user, the
      * presented password and the CSRF token value.
      *
      * You may throw any AuthenticationException in this method in case of error (e.g.

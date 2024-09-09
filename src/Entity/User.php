@@ -1,7 +1,15 @@
 <?php
 
 /**
- * User entity.
+ * This file is part of the [Blog app] project.
+ *
+ * (c) [2024] [Kacper Zimmer]
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ *
+ * For more information, please view the LICENSE file that was
+ * distributed with this source code.
  */
 
 namespace App\Entity;
@@ -16,7 +24,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class User.
+ * Represents a user in the application.
+ *
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ *
+ * @ORM\Table(name="users")
+ *
+ * @ORM\UniqueConstraint(name="email_idx", columns={"email"})
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
@@ -24,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
-     * Primary key.
+     * The unique identifier for the user.
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,45 +46,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     /**
-     * Email.
+     * The email address of the user.
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    private ?string $email;
+    private ?string $email = null;
 
     /**
-     * Roles.
+     * The roles assigned to the user.
      *
      * @var array<int, string>
      */
     #[ORM\Column(type: 'json')]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'array')]
     private array $roles = [];
 
     /**
-     * Password.
+     * The plain password entered by the user (not persisted).
      */
     private ?string $plainPassword = null;
 
+    /**
+     * The hashed password of the user.
+     */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private ?string $password;
+    private ?string $password = null;
 
     /**
+     * The posts created by the user.
+     *
      * @var Collection<int, Post>
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'UserID', orphanRemoval: true)]
     private Collection $getPosts;
 
+    /**
+     * Constructor to initialize collections.
+     */
     public function __construct()
     {
         $this->getPosts = new ArrayCollection();
     }
 
     /**
-     * Getter for id.
+     * Get the unique identifier for the user.
      *
-     * @return int|null Id
+     * @return int|null The user ID or null if not set
      */
     public function getId(): ?int
     {
@@ -78,9 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Getter for email.
+     * Get the email address of the user.
      *
-     * @return string|null Email
+     * @return string|null The email address or null if not set
      */
     public function getEmail(): ?string
     {
@@ -88,9 +112,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Setter for email.
+     * Set the email address of the user.
      *
-     * @param string $email Email
+     * @param string $email The email address to set
      */
     public function setEmail(string $email): void
     {
@@ -98,9 +122,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
+     * Get the user identifier (used for authentication).
      *
-     * @return string User identifier
+     * @return string The user identifier (email)
      *
      * @see UserInterface
      */
@@ -112,7 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      *
-     * @return string Username
+     * @return string The username (email)
      */
     public function getUsername(): string
     {
@@ -120,15 +144,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Getter for roles.
+     * Get the roles assigned to the user.
      *
-     * @return array<int, string> Roles
+     * @return array<int, string> The roles
      *
      * @see UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles; // Assuming $this->roles is an array of strings
+        $roles = $this->roles;
 
         foreach ($roles as $role) {
             if (!is_string($role)) {
@@ -144,9 +168,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Setter for roles.
+     * Set the roles assigned to the user.
      *
-     * @param array<int, string> $roles Roles
+     * @param array<int, string> $roles The roles to set
      */
     public function setRoles(array $roles): void
     {
@@ -154,9 +178,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Getter for password.
+     * Get the hashed password of the user.
      *
-     * @return string|null Password
+     * @return string|null The hashed password or null if not set
      *
      * @see PasswordAuthenticatedUserInterface
      */
@@ -166,9 +190,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Setter for password.
+     * Set the hashed password of the user.
      *
-     * @param string $password User password
+     * @param string $password The hashed password to set
      */
     public function setPassword(string $password): void
     {
@@ -176,8 +200,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     * Returns a salt if necessary for the password hashing algorithm.
+     *
+     * @return string|null Null if using a modern hashing algorithm (bcrypt or sodium)
      *
      * @see UserInterface
      */
@@ -193,45 +218,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
-     * @return Collection<int, Post>
+     * Get the plain password (not persisted).
+     *
+     * @return string|null The plain password or null if not set
      */
-    public function getGetPosts(): Collection
-    {
-        return $this->getPosts;
-    }
-
-    public function addGetPost(Post $getPost): static
-    {
-        if (!$this->getPosts->contains($getPost)) {
-            $this->getPosts->add($getPost);
-            $getPost->setUserID($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetPost(Post $getPost): static
-    {
-        if ($this->getPosts->removeElement($getPost)) {
-            // set the owning side to null (unless already changed)
-            if ($getPost->getUserID() === $this) {
-                $getPost->setUserID(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
+    /**
+     * Set the plain password (not persisted).
+     *
+     * @param string|null $plainPassword The plain password to set, or null to unset it
+     *
+     * @return self Returns the current instance for method chaining
+     */
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;

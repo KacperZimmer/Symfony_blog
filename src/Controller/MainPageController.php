@@ -19,28 +19,42 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Controller for handling the main page and user-related actions.
+ */
 class MainPageController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private UserServiceInterface $userService;
     private PostServiceInterface $postService;
 
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        UserServiceInterface $userService,
-        PostServiceInterface $postService,
-    ) {
+    /**
+     * MainPageController constructor.
+     *
+     * @param EntityManagerInterface $entityManager The entity manager for database interactions
+     * @param UserServiceInterface   $userService   The user service for user-related operations
+     * @param PostServiceInterface   $postService   The post service for post-related operations
+     */
+    public function __construct(EntityManagerInterface $entityManager, UserServiceInterface $userService, PostServiceInterface $postService)
+    {
         $this->entityManager = $entityManager;
         $this->userService = $userService;
         $this->postService = $postService;
     }
 
-    #[Route('/', name: 'main_page')]
-    public function index(
-        Request $request,
-        CategoryRepository $categoryRepository,
-        PaginatorInterface $paginator,
-    ): Response {
+    /**
+     * Displays the main page with a list of posts and a category filter form.
+     *
+     * @Route("/", name="main_page")
+     *
+     * @param Request            $request            The HTTP request object
+     * @param CategoryRepository $categoryRepository The repository for fetching categories
+     * @param PaginatorInterface $paginator          The paginator for handling pagination
+     *
+     * @return Response The rendered main page with the list of posts
+     */
+    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    {
         $categories = $categoryRepository->findAll();
         $categoryChoices = [];
 
@@ -55,9 +69,9 @@ class MainPageController extends AbstractController
                     return $key;
                 },
                 'required' => false,
-                'placeholder' => 'Wybierz kategorię',
+                'placeholder' => 'category_placeholder',
             ])
-            ->add('search', SubmitType::class, ['label' => 'Szukaj'])
+            ->add('search', SubmitType::class, ['label' => 'search_button'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -67,11 +81,7 @@ class MainPageController extends AbstractController
 
         $query = $queryBuilder->getQuery();
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            PostRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), PostRepository::PAGINATOR_ITEMS_PER_PAGE);
 
         return $this->render('main_page.html.twig', [
             'pagination' => $pagination,
@@ -79,7 +89,15 @@ class MainPageController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/user/edit', name: 'admin_user_edit')]
+    /**
+     * Edits the current user's profile.
+     *
+     * @Route("/admin/user/edit", name="admin_user_edit")
+     *
+     * @param Request $request The HTTP request object
+     *
+     * @return Response The rendered form for editing the user or redirect to the main page
+     */
     public function editUser(Request $request): Response
     {
         $user = $this->getUser();

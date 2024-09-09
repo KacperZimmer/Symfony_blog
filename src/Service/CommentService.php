@@ -1,5 +1,7 @@
 <?php
+
 // src/Service/CommentService.php
+
 namespace App\Service;
 
 use App\Entity\Comment;
@@ -19,6 +21,7 @@ class CommentService implements CommentServiceInterface
         $this->entityManager->remove($comment);
         $this->entityManager->flush();
     }
+
     public function saveComment(Comment $comment): void
     {
         $this->entityManager->persist($comment);

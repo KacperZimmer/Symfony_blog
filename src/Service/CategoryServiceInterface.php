@@ -1,10 +1,10 @@
 <?php
+
 // src/Service/CategoryServiceInterface.php
+
 namespace App\Service;
 
 use App\Entity\Category;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\CategoryRepository;
 
 interface CategoryServiceInterface
 {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User entity.
  */
@@ -24,8 +25,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,8 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Email.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
@@ -52,11 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Password.
-     *
-     * @var string|null
      */
-
-
     private ?string $plainPassword = null;
 
     #[ORM\Column(type: 'string')]
@@ -137,14 +130,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles; // Assuming $this->roles is an array of strings
 
-
         foreach ($roles as $role) {
             if (!is_string($role)) {
                 throw new \InvalidArgumentException('Each role must be a string');
             }
         }
-
-
 
         if (!in_array(UserRole::ROLE_USER->value, $roles, true)) {
             $roles[] = UserRole::ROLE_USER->value;
@@ -152,7 +142,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
 
     /**
      * Setter for roles.
@@ -246,6 +235,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
         return $this;
     }
 }

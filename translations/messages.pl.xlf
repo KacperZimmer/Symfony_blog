@@ -193,6 +193,38 @@
         <source>user.edit.heading</source>
         <target>Zmiana danych użytkownika</target>
       </trans-unit>
+         <trans-unit id="login.sign_in">
+              <source>login.sign_in</source>
+              <target>Logowanie</target>
+            </trans-unit>
+    <trans-unit id="login.password">
+              <source>login.password</source>
+              <target>Hasło</target>
+            </trans-unit>
+
+                <trans-unit id="login.email">
+                          <source>login.email</source>
+                          <target>Email</target>
+                        </trans-unit>
+    <trans-unit id="login.remember_me">
+                          <source>login.remember_me</source>
+                          <target>Zapamiętaj dane</target>
+                        </trans-unit>
+   <trans-unit id="login.sign_in_button">
+                          <source>login.sign_in_button</source>
+                          <target>Zaloguj</target>
+                        </trans-unit>
+
+                           <trans-unit id="login.error">
+                                                  <source>login.error</source>
+                                                  <target>Błędne dane</target>
+                                                </trans-unit>
+
+           <trans-unit id="post.comments">
+                                                          <source>post.comments</source>
+                                                          <target>Komentarze</target>
+                                                        </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -13,13 +13,12 @@ class DatabaseTestController extends AbstractController
     public function testDatabase(EntityManagerInterface $em): Response
     {
         try {
-
             $connection = $em->getConnection();
-            $sql = "SELECT 1";
+            $sql = 'SELECT 1';
             $stmt = $connection->prepare($sql);
             $stmt->execute();
 
-            return new Response('Połączenie z bazą danych jest poprawne.');
+            return new Response('Połączenie z bazą danych jest poprawne. ');
         } catch (\Exception $e) {
             return new Response('Błąd połączenia z bazą danych: ' . $e->getMessage());
         }

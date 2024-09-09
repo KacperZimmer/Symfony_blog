@@ -1,15 +1,17 @@
 <?php
+
 // src/Controller/PostController.php
+
 namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
-use App\Repository\PostRepository;
-use App\Service\PostServiceInterface;
-use App\Service\CommentServiceInterface;
 use App\Repository\CategoryRepository;
+use App\Repository\PostRepository;
+use App\Service\CommentServiceInterface;
+use App\Service\PostServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +27,7 @@ class PostController extends AbstractController
     public function __construct(
         PostServiceInterface $postService,
         CommentServiceInterface $commentService,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
     ) {
         $this->postService = $postService;
         $this->commentService = $commentService;
@@ -93,7 +95,7 @@ class PostController extends AbstractController
         return $this->redirectToRoute('main_page');
     }
 
-    #[Route("/post/{id}/edit", name:"post_edit")]
+    #[Route('/post/{id}/edit', name: 'post_edit')]
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -135,4 +137,3 @@ class PostController extends AbstractController
         ]);
     }
 }
-

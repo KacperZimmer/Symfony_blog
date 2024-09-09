@@ -1,5 +1,7 @@
 <?php
+
 // src/Service/CategoryService.php
+
 namespace App\Service;
 
 use App\Entity\Category;

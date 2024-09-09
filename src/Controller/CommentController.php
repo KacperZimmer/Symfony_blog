@@ -1,5 +1,7 @@
 <?php
+
 // src/Controller/CommentController.php
+
 namespace App\Controller;
 
 use App\Entity\Comment;
@@ -32,4 +34,3 @@ class CommentController extends AbstractController
         return $this->redirectToRoute('post_show', ['id' => $comment->getPost()->getId()]);
     }
 }
-

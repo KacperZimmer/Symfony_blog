@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CommentType extends AbstractType
 {
@@ -17,18 +18,18 @@ class CommentType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'form.label.email',
-                'attr' => ['placeholder' => 'form.placeholder.email']
+                'attr' => ['placeholder' => 'form.placeholder.email'],
             ])
             ->add('nick', TextType::class, [
                 'label' => 'form.label.nick',
-                'attr' => ['placeholder' => 'form.placeholder.nick']
+                'attr' => ['placeholder' => 'form.placeholder.nick'],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'form.label.content',
-                'attr' => ['placeholder' => 'form.placeholder.content']
+                'attr' => ['placeholder' => 'form.placeholder.content'],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'button.add_comment'
+                'label' => 'button.add_comment',
             ]);
     }
 

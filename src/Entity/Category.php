@@ -17,8 +17,6 @@ class Category
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name = null;
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -35,8 +33,4 @@ class Category
 
         return $this;
     }
-
-
-
-
 }

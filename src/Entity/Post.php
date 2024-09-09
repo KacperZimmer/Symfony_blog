@@ -30,8 +30,6 @@ class Post
 {
     /**
      * The unique identifier for the post.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -40,8 +38,6 @@ class Post
 
     /**
      * The title of the post.
-     *
-     * @var string|null
      */
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank]
@@ -50,8 +46,6 @@ class Post
 
     /**
      * The content of the post.
-     *
-     * @var string|null
      */
     #[ORM\Column(length: 200)]
     #[Assert\NotBlank]

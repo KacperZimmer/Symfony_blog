@@ -31,7 +31,7 @@ class DatabaseTestController extends AbstractController
      *
      * @param EntityManagerInterface $em The entity manager
      *
-     * @return Response
+     * @return Response The response object indicating success or failure of the database connection
      */
     public function testDatabase(EntityManagerInterface $em): Response
     {

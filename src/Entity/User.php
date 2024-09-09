@@ -27,7 +27,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Represents a user in the application.
  *
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *
  * @ORM\Table(name="users")
+ *
  * @ORM\UniqueConstraint(name="email_idx", columns={"email"})
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -37,8 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * The unique identifier for the user.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,8 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * The email address of the user.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
@@ -67,15 +65,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * The plain password entered by the user (not persisted).
-     *
-     * @var string|null
      */
     private ?string $plainPassword = null;
 
     /**
      * The hashed password of the user.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]

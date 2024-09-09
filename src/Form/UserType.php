@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class UserType
+ * Class UserType.
  *
  * Form type for creating or editing a user.
  */

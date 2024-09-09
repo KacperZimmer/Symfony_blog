@@ -30,15 +30,12 @@ class PostController extends AbstractController
     /**
      * PostController constructor.
      *
-     * @param PostServiceInterface $postService The post service for handling post operations
-     * @param CommentServiceInterface $commentService The comment service for handling comment operations
-     * @param CategoryRepository $categoryRepository The repository for fetching categories
+     * @param PostServiceInterface    $postService        The post service for handling post operations
+     * @param CommentServiceInterface $commentService     The comment service for handling comment operations
+     * @param CategoryRepository      $categoryRepository The repository for fetching categories
      */
-    public function __construct(
-        PostServiceInterface $postService,
-        CommentServiceInterface $commentService,
-        CategoryRepository $categoryRepository
-    ) {
+    public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryRepository $categoryRepository)
+    {
         $this->postService = $postService;
         $this->commentService = $commentService;
         $this->categoryRepository = $categoryRepository;
@@ -50,7 +47,7 @@ class PostController extends AbstractController
      * @Route("/post/{id}", name="post_show", methods={"GET", "POST"})
      *
      * @param Request $request The HTTP request object
-     * @param Post $post The post entity to display
+     * @param Post    $post    The post entity to display
      *
      * @return Response The rendered view of the post
      */
@@ -116,13 +113,13 @@ class PostController extends AbstractController
      * @Route("/post/delete/{id}", name="post_delete", methods={"POST"})
      *
      * @param Request $request The HTTP request object
-     * @param Post $post The post entity to delete
+     * @param Post    $post    The post entity to delete
      *
      * @return Response A redirect to the main page
      */
     public function delete(Request $request, Post $post): Response
     {
-        if ($this->isCsrfTokenValid('delete-post' . $post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-post'.$post->getId(), $request->request->get('_token'))) {
             $this->postService->deletePost($post);
 
             $this->addFlash('success', 'Post został usunięty pomyślnie.');
@@ -137,7 +134,7 @@ class PostController extends AbstractController
      * @Route("/post/{id}/edit", name="post_edit")
      *
      * @param Request $request The HTTP request object
-     * @param Post $post The post entity to edit
+     * @param Post    $post    The post entity to edit
      *
      * @return Response The rendered form or redirect to the main page
      */
@@ -166,7 +163,7 @@ class PostController extends AbstractController
      *
      * @Route("/posts", name="post_list", methods={"GET"})
      *
-     * @param Request $request The HTTP request object
+     * @param Request            $request   The HTTP request object
      * @param PaginatorInterface $paginator The paginator for handling pagination
      *
      * @return Response The rendered list of posts

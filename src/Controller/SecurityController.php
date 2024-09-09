@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
      *
      * @param AuthenticationUtils $authenticationUtils Utility to get authentication details
      *
-     * @return Response
+     * @return Response The rendered login view
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

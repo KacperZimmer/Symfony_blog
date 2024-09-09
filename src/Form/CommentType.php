@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class CommentType
+ * Class CommentType.
  *
  * Form type for creating or editing a comment.
  */

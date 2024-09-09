@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class CategoryType
+ * Class CategoryType.
  *
  * Form type for creating or editing a category.
  */

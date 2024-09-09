@@ -31,8 +31,6 @@ class Category
 {
     /**
      * The unique identifier for the category.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -41,8 +39,6 @@ class Category
 
     /**
      * The name of the category.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: Types::STRING, length: 255)]
     #[Assert\NotBlank]

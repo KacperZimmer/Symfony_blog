@@ -12,17 +12,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Controller for managing categories.
+ */
 class CategoryController extends AbstractController
 {
     private CategoryServiceInterface $categoryService;
 
+    /**
+     * CategoryController constructor.
+     *
+     * @param CategoryServiceInterface $categoryService The service for handling category operations
+     */
     public function __construct(CategoryServiceInterface $categoryService)
     {
         $this->categoryService = $categoryService;
     }
 
     /**
+     * Displays and handles the form for creating a new category.
+     *
      * @Route("/category/news", name="category_new", methods={"GET", "POST"})
+     *
+     * @param Request $request The HTTP request object
+     *
+     * @return Response The rendered form or redirect to the category list
      */
     public function new(Request $request): Response
     {
@@ -45,7 +59,11 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Lists all categories.
+     *
      * @Route("/categories", name="category_list")
+     *
+     * @return Response The rendered list of categories
      */
     public function list(): Response
     {
@@ -57,11 +75,18 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Deletes a category.
+     *
      * @Route("/category/{id}/delete", name="category_delete", methods={"DELETE"})
+     *
+     * @param Request  $request  The HTTP request object
+     * @param Category $category The category entity to delete
+     *
+     * @return Response A redirect to the category list
      */
     public function delete(Request $request, Category $category): Response
     {
-        if ($this->isCsrfTokenValid('delete-category' . $category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-category'.$category->getId(), $request->request->get('_token'))) {
             $this->categoryService->deleteCategory($category);
 
             $this->addFlash('success', 'Kategoria została usunięta pomyślnie.');
@@ -70,9 +95,15 @@ class CategoryController extends AbstractController
         return $this->redirectToRoute('category_list');
     }
 
-
     /**
+     * Displays and handles the form for editing a category.
+     *
      * @Route("/category/{id}/edit", name="category_edit", methods={"GET", "PUT"})
+     *
+     * @param Request  $request  The HTTP request object
+     * @param Category $category The category entity to edit
+     *
+     * @return Response The rendered form or redirect to the category list
      */
     public function edit(Request $request, Category $category): Response
     {

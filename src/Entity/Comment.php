@@ -27,8 +27,6 @@ class Comment
 {
     /**
      * The unique identifier for the comment.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,8 +35,6 @@ class Comment
 
     /**
      * The email address of the commenter.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180)]
     #[Assert\NotBlank]
@@ -47,8 +43,6 @@ class Comment
 
     /**
      * The nickname of the commenter.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank]
@@ -57,8 +51,6 @@ class Comment
 
     /**
      * The content of the comment.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank]
@@ -66,8 +58,6 @@ class Comment
 
     /**
      * The post associated with the comment.
-     *
-     * @var Post|null
      */
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]

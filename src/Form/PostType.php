@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class PostType
+ * Class PostType.
  *
  * Form type for creating or editing a post.
  */

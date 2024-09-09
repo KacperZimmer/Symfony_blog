@@ -1,33 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dodaj nową kategorię{% endblock %}
+{% block title %}
+    {{ 'category.add_new.title'|trans }}
+{% endblock %}
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">{{ 'menu.blog'|trans }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="{{ 'navbar.toggle_navigation'|trans }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Strona główna</a>
+                        <a class="nav-link" href="{{ path('main_page') }}">{{ 'menu.home'|trans }}</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('category_list') }}">{{ 'menu.categories'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">O nas</a>
+                        <a class="nav-link" href="{{ path('add_post') }}">{{ 'menu.create_post'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Kontakt</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('category_list') }}">Kategorie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
                     </li>
                 </ul>
             </div>
@@ -37,11 +34,11 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center my-4">Dodaj nową kategorię</h1>
+                <h1 class="text-center my-4">{{ 'category.add_new.title'|trans }}</h1>
 
                 {{ form_start(form) }}
-                {{ form_row(form.name) }}
-                <button class="btn btn-primary" type="submit">Dodaj kategorię</button>
+                {{ form_row(form.name, {'label': 'form.label.name'|trans, 'attr': {'placeholder': 'form.placeholder.name'|trans}}) }}
+                <button class="btn btn-primary" type="submit">{{ 'category.add_new.button'|trans }}</button>
                 {{ form_end(form) }}
             </div>
         </div>

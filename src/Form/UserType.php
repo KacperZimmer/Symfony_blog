@@ -14,22 +14,24 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class CategoryType.
+ * Class UserType.
  *
- * Form type for creating or editing a category.
+ * Form type for creating or editing a user.
  */
-class CategoryType extends AbstractType
+class UserType extends AbstractType
 {
     /**
-     * Builds the form for creating or editing a category.
+     * Builds the form for creating or editing a user.
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options An array of options for building the form
@@ -37,17 +39,28 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'form.label.name',
-                'attr' => [
-                    'placeholder' => 'form.placeholder.name',
-                ],
+            ->add('email', EmailType::class, [
+                'label' => 'form.label.email',
+                'attr' => ['class' => 'form-control'],
                 'constraints' => [
                     new Assert\NotBlank(),
+                    new Assert\Email(),
+                ],
+            ])
+            ->add('plainPassword', PasswordType::class, [
+                'label' => 'form.label.plainPassword',
+                'required' => false,
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
                     new Assert\Length([
-                        'max' => 50,
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
                     ]),
                 ],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'form.button.save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
             ]);
     }
 
@@ -59,7 +72,7 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            'data_class' => User::class,
         ]);
     }
 }

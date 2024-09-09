@@ -1,34 +1,40 @@
+{# templates/main_page.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog{% endblock %}
+{% block title %}{{ 'title.welcome_blog'|trans }}{% endblock %}
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Blog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="{{ path('main_page') }}">{{ 'menu.blog'|trans }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="{{ 'navbar.toggle_navigation'|trans }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Strona główna <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('main_page') }}">{{ 'menu.home'|trans }} <span class="sr-only">({{ 'menu.current'|trans }})</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">O nas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Kontakt</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('category_list') }}">Kategorie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('add_post') }}">Utwórz Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj</a>
-                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('category_list') }}">{{ 'menu.categories'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('add_post') }}">{{ 'menu.create_post'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_edit_user') }}">{{ 'menu.edit_profile'|trans }}</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">{{ 'menu.logout'|trans }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">{{ 'menu.login'|trans }}</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -37,25 +43,38 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center my-4">Witaj w naszym blogu!</h1>
+                <h1 class="text-center my-4">{{ 'header.welcome_blog'|trans }}</h1>
 
-                {% for post in pagination.items %}
+                <div class="mb-4">
+                    {{ form_start(form, { 'attr': { 'class': 'form-inline' } }) }}
+                    <div class="form-group mr-2">
+                        {{ form_row(form.category, { 'attr': { 'class': 'form-control', 'placeholder': 'category_placeholder'|trans } }) }}
+                    </div>
+                    <div class="form-group mr-2">
+                        {{ form_row(form.search, { 'attr': { 'class': 'btn btn-primary', 'label': 'search_button'|trans } }) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+
+                {% for post in pagination %}
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.content|slice(0, 100) }}...</p>
-                            <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">Czytaj więcej</a>
+                            <a href="{{ path('post_show', {'id': post.id}) }}" class="btn btn-primary">{{ 'button.read_more'|trans }}</a>
 
-                            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">Edytuj</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary">{{ 'button.edit'|trans }}</a>
 
-                            <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten post?');" style="display:inline-block;">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-                                <button class="btn btn-danger" type="submit">Usuń</button>
-                            </form>
+                                <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_post'|trans }}');" style="display:inline-block;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                                    <button class="btn btn-danger" type="submit">{{ 'button.delete'|trans }}</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 {% else %}
-                    <p>Brak dostępnych postów do wyświetlenia.</p>
+                    <p>{{ 'message.no_posts'|trans }}</p>
                 {% endfor %}
 
                 <div class="navigation text-center">

@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
@@ -9,7 +11,71 @@
                 <h1>{{ post.title }}</h1>
                 <p>{{ post.content }}</p>
 
-                <a href="{{ path('main_page') }}" class="btn btn-secondary">Powrót do listy postów</a>
+                <div class="mb-4">
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesCollapse">
+                        {{ 'post.view.categories'|trans }} <i class="fas fa-plus"></i>
+                    </button>
+                    <div id="categoriesCollapse" class="collapse mt-2">
+                        {% if post.categories|length > 0 %}
+                            <ul class="list-group">
+                                {% for category in post.categories %}
+                                    <li class="list-group-item">{{ category.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>{{ 'post.view.no_categories'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#commentsFormCollapse">
+                        {{ 'post.add_comment'|trans }} <i class="fas fa-plus"></i>
+                    </button>
+                    <div id="commentsFormCollapse" class="collapse mt-2">
+                        {{ form_start(commentForm) }}
+                        <div class="mb-3">
+                            {{ form_row(commentForm.nick, {'label': 'form.label.nick'|trans}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(commentForm.email, {'label': 'form.label.email'|trans}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(commentForm.content, {'label': 'form.label.content'|trans}) }}
+                        </div>
+                        {{ form_end(commentForm) }}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3>{{ 'post.comments'|trans }}:</h3>
+                    <ul class="list-group">
+                        {% for comment in post.comments %}
+                            <li class="list-group-item">
+                                <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_comment'|trans }}');" style="display:inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
+                                        <button class="btn btn-danger btn-sm ml-2" type="submit">{{ 'button.delete'|trans }}</button>
+                                    </form>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <hr>
+
+                <div class="mb-4">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary mr-2">{{ 'button.edit'|trans }}</a>
+                        <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_post'|trans }}');" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
+                            <button class="btn btn-danger" type="submit">{{ 'button.delete'|trans }}</button>
+                        </form>
+                    {% endif %}
+                    <a href="{{ path('main_page') }}" class="btn btn-primary">{{ 'button.return_to_list'|trans }}</a>
+                </div>
             </div>
         </div>
     </div>

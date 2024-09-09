@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the [Blog app] project.
+ *
+ * (c) [2024] [Kacper Zimmer]
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ *
+ * For more information, please view the LICENSE file that was
+ * distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -16,7 +28,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * Constructs the repository with the manager registry and Category entity class.
      *
-     * @param ManagerRegistry $registry The manager registry for the entity manager.
+     * @param ManagerRegistry $registry the manager registry for the entity manager
      */
     public function __construct(ManagerRegistry $registry)
     {

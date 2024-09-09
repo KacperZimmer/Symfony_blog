@@ -21,8 +21,8 @@ class PostService implements PostServiceInterface
     /**
      * Constructs the PostService with the provided repository and entity manager.
      *
-     * @param PostRepository $postRepository The repository for Post entities.
-     * @param EntityManagerInterface $entityManager The entity manager for managing entity persistence.
+     * @param PostRepository         $postRepository the repository for Post entities
+     * @param EntityManagerInterface $entityManager  the entity manager for managing entity persistence
      */
     public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
     {
@@ -33,7 +33,7 @@ class PostService implements PostServiceInterface
     /**
      * Saves a post to the database.
      *
-     * @param Post $post The post entity to save.
+     * @param Post $post the post entity to save
      */
     public function savePost(Post $post): void
     {
@@ -44,7 +44,7 @@ class PostService implements PostServiceInterface
     /**
      * Deletes a post from the database.
      *
-     * @param Post $post The post entity to delete.
+     * @param Post $post the post entity to delete
      */
     public function deletePost(Post $post): void
     {
@@ -55,7 +55,7 @@ class PostService implements PostServiceInterface
     /**
      * Updates a post in the database.
      *
-     * @param Post $post The post entity to update.
+     * @param Post $post the post entity to update
      */
     public function updatePost(Post $post): void
     {
@@ -65,9 +65,9 @@ class PostService implements PostServiceInterface
     /**
      * Retrieves all posts, optionally filtered by category.
      *
-     * @param int|null $categoryId The category ID to filter by, or null to retrieve all posts.
+     * @param int|null $categoryId the category ID to filter by, or null to retrieve all posts
      *
-     * @return Query The query for retrieving posts.
+     * @return Query the query for retrieving posts
      */
     public function getAllPosts(?int $categoryId = null): Query
     {
@@ -86,9 +86,9 @@ class PostService implements PostServiceInterface
     /**
      * Retrieves a QueryBuilder for all posts, optionally filtered by category.
      *
-     * @param int|null $categoryId The category ID to filter by, or null to retrieve all posts.
+     * @param int|null $categoryId the category ID to filter by, or null to retrieve all posts
      *
-     * @return QueryBuilder The QueryBuilder for retrieving posts.
+     * @return QueryBuilder the QueryBuilder for retrieving posts
      */
     public function getQueryBuilderForAllPosts(?int $categoryId = null): QueryBuilder
     {

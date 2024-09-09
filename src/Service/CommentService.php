@@ -17,7 +17,7 @@ class CommentService implements CommentServiceInterface
     /**
      * Constructs the CommentService with the provided entity manager.
      *
-     * @param EntityManagerInterface $entityManager The entity manager for managing entity persistence.
+     * @param EntityManagerInterface $entityManager the entity manager for managing entity persistence
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -27,7 +27,7 @@ class CommentService implements CommentServiceInterface
     /**
      * Deletes a comment from the database.
      *
-     * @param Comment $comment The comment entity to delete.
+     * @param Comment $comment the comment entity to delete
      */
     public function deleteComment(Comment $comment): void
     {
@@ -38,7 +38,7 @@ class CommentService implements CommentServiceInterface
     /**
      * Saves a comment to the database.
      *
-     * @param Comment $comment The comment entity to save.
+     * @param Comment $comment the comment entity to save
      */
     public function saveComment(Comment $comment): void
     {

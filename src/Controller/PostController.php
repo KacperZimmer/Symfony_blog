@@ -18,23 +18,42 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Controller for managing blog posts.
+ */
 class PostController extends AbstractController
 {
     private PostServiceInterface $postService;
     private CommentServiceInterface $commentService;
     private CategoryRepository $categoryRepository;
 
+    /**
+     * PostController constructor.
+     *
+     * @param PostServiceInterface $postService The post service for handling post operations
+     * @param CommentServiceInterface $commentService The comment service for handling comment operations
+     * @param CategoryRepository $categoryRepository The repository for fetching categories
+     */
     public function __construct(
         PostServiceInterface $postService,
         CommentServiceInterface $commentService,
-        CategoryRepository $categoryRepository,
+        CategoryRepository $categoryRepository
     ) {
         $this->postService = $postService;
         $this->commentService = $commentService;
         $this->categoryRepository = $categoryRepository;
     }
 
-    #[Route('/post/{id}', name: 'post_show', methods: ['GET', 'POST'])]
+    /**
+     * Displays a single post with its comments and handles comment submission.
+     *
+     * @Route("/post/{id}", name="post_show", methods={"GET", "POST"})
+     *
+     * @param Request $request The HTTP request object
+     * @param Post $post The post entity to display
+     *
+     * @return Response The rendered view of the post
+     */
     public function show(Request $request, Post $post): Response
     {
         $comment = new Comment();
@@ -57,7 +76,15 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/add', name: 'post_add', methods: ['GET', 'POST'])]
+    /**
+     * Adds a new post.
+     *
+     * @Route("/post/add", name="post_add", methods={"GET", "POST"})
+     *
+     * @param Request $request The HTTP request object
+     *
+     * @return Response The rendered form or redirect to the main page
+     */
     public function add(Request $request): Response
     {
         $post = new Post();
@@ -83,7 +110,16 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/delete/{id}', name: 'post_delete', methods: ['POST'])]
+    /**
+     * Deletes a post.
+     *
+     * @Route("/post/delete/{id}", name="post_delete", methods={"POST"})
+     *
+     * @param Request $request The HTTP request object
+     * @param Post $post The post entity to delete
+     *
+     * @return Response A redirect to the main page
+     */
     public function delete(Request $request, Post $post): Response
     {
         if ($this->isCsrfTokenValid('delete-post' . $post->getId(), $request->request->get('_token'))) {
@@ -95,7 +131,16 @@ class PostController extends AbstractController
         return $this->redirectToRoute('main_page');
     }
 
-    #[Route('/post/{id}/edit', name: 'post_edit')]
+    /**
+     * Edits an existing post.
+     *
+     * @Route("/post/{id}/edit", name="post_edit")
+     *
+     * @param Request $request The HTTP request object
+     * @param Post $post The post entity to edit
+     *
+     * @return Response The rendered form or redirect to the main page
+     */
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -116,7 +161,16 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/posts', name: 'post_list', methods: ['GET'])]
+    /**
+     * Lists all posts with optional category filtering and pagination.
+     *
+     * @Route("/posts", name="post_list", methods={"GET"})
+     *
+     * @param Request $request The HTTP request object
+     * @param PaginatorInterface $paginator The paginator for handling pagination
+     *
+     * @return Response The rendered list of posts
+     */
     public function list(Request $request, PaginatorInterface $paginator): Response
     {
         $categories = $this->categoryRepository->findAll();

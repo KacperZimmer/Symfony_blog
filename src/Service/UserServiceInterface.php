@@ -14,9 +14,7 @@ interface UserServiceInterface
     /**
      * Updates a User entity, including processing any password changes.
      *
-     * @param User $user The user entity to be updated.
-     *
-     * @return void
+     * @param User $user the user entity to be updated
      */
     public function updateUser(User $user): void;
 }

@@ -55,10 +55,11 @@ class MainPageController extends AbstractController
                     return $key;
                 },
                 'required' => false,
-                'placeholder' => 'Wybierz kategorię',
+                'placeholder' => 'category_placeholder',
             ])
-            ->add('search', SubmitType::class, ['label' => 'Szukaj'])
+            ->add('search', SubmitType::class, ['label' => 'search_button'])
             ->getForm();
+
 
         $form->handleRequest($request);
         $categoryId = $form->get('category')->getData();

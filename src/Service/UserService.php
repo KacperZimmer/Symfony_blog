@@ -19,8 +19,8 @@ class UserService implements UserServiceInterface
     /**
      * Constructor.
      *
-     * @param EntityManagerInterface $entityManager The entity manager used for database operations.
-     * @param UserPasswordHasherInterface $passwordHasher The password hasher for encoding user passwords.
+     * @param EntityManagerInterface      $entityManager  the entity manager used for database operations
+     * @param UserPasswordHasherInterface $passwordHasher the password hasher for encoding user passwords
      */
     public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
@@ -31,9 +31,7 @@ class UserService implements UserServiceInterface
     /**
      * Updates a User entity, including hashing the plain password if provided.
      *
-     * @param User $user The user entity to be updated.
-     *
-     * @return void
+     * @param User $user the user entity to be updated
      */
     public function updateUser(User $user): void
     {

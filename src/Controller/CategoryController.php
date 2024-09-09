@@ -70,8 +70,9 @@ class CategoryController extends AbstractController
         return $this->redirectToRoute('category_list');
     }
 
+
     /**
-     * @Route("/category/{id}/edit", name="category_edit", methods={"GET", "POST"})
+     * @Route("/category/{id}/edit", name="category_edit", methods={"GET", "PUT"})
      */
     public function edit(Request $request, Category $category): Response
     {
@@ -80,7 +81,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoryService->updateCategory();
+            $this->categoryService->updateCategory($category);
 
             $this->addFlash('success', 'Kategoria została zaktualizowana pomyślnie.');
 

@@ -19,8 +19,8 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Constructs the CategoryService with the provided entity manager and category repository.
      *
-     * @param EntityManagerInterface $entityManager The entity manager for managing entity persistence.
-     * @param CategoryRepository $categoryRepository The repository for fetching Category entities.
+     * @param EntityManagerInterface $entityManager      the entity manager for managing entity persistence
+     * @param CategoryRepository     $categoryRepository the repository for fetching Category entities
      */
     public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository)
     {
@@ -31,7 +31,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Creates a new category and persists it to the database.
      *
-     * @param Category $category The category entity to create.
+     * @param Category $category the category entity to create
      */
     public function createCategory(Category $category): void
     {
@@ -42,7 +42,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Deletes a category from the database.
      *
-     * @param Category $category The category entity to delete.
+     * @param Category $category the category entity to delete
      */
     public function deleteCategory(Category $category): void
     {
@@ -63,7 +63,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Retrieves all categories from the database.
      *
-     * @return Category[] An array of Category entities.
+     * @return Category[] an array of Category entities
      */
     public function getAllCategories(): array
     {

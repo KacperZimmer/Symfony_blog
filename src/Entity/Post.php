@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the [Blog app] project.
+ *
+ * (c) [2024] [Kacper Zimmer]
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ *
+ * For more information, please view the LICENSE file that was
+ * distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use App\Repository\PostRepository;
@@ -8,6 +20,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Represents a blog post.
+ *
+ * @ORM\Entity(repositoryClass=PostRepository::class)
+ */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
@@ -58,6 +75,9 @@ class Post
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $comments;
 
+    /**
+     * Constructor to initialize collections.
+     */
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -67,7 +87,7 @@ class Post
     /**
      * Get the unique identifier for the post.
      *
-     * @return int|null The post ID or null if not set.
+     * @return int|null The post ID or null if not set
      */
     public function getId(): ?int
     {
@@ -77,7 +97,7 @@ class Post
     /**
      * Get the title of the post.
      *
-     * @return string|null The title of the post or null if not set.
+     * @return string|null The title of the post or null if not set
      */
     public function getTitle(): ?string
     {
@@ -87,8 +107,9 @@ class Post
     /**
      * Set the title of the post.
      *
-     * @param string $title The title to set.
-     * @return static Returns the current instance for method chaining.
+     * @param string $title The title to set
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function setTitle(string $title): static
     {
@@ -100,7 +121,7 @@ class Post
     /**
      * Get the content of the post.
      *
-     * @return string|null The content of the post or null if not set.
+     * @return string|null The content of the post or null if not set
      */
     public function getContent(): ?string
     {
@@ -110,8 +131,9 @@ class Post
     /**
      * Set the content of the post.
      *
-     * @param string $content The content to set.
-     * @return static Returns the current instance for method chaining.
+     * @param string $content The content to set
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function setContent(string $content): static
     {
@@ -123,7 +145,7 @@ class Post
     /**
      * Get the categories associated with the post.
      *
-     * @return Collection<int, Category> The categories collection.
+     * @return Collection<int, Category> The categories collection
      */
     public function getCategories(): Collection
     {
@@ -133,8 +155,9 @@ class Post
     /**
      * Add a category to the post.
      *
-     * @param Category $category The category to add.
-     * @return static Returns the current instance for method chaining.
+     * @param Category $category The category to add
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function addCategory(Category $category): self
     {
@@ -148,8 +171,9 @@ class Post
     /**
      * Remove a category from the post.
      *
-     * @param Category $category The category to remove.
-     * @return static Returns the current instance for method chaining.
+     * @param Category $category The category to remove
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function removeCategory(Category $category): self
     {
@@ -161,7 +185,7 @@ class Post
     /**
      * Get the comments associated with the post.
      *
-     * @return Collection<int, Comment> The comments collection.
+     * @return Collection<int, Comment> The comments collection
      */
     public function getComments(): Collection
     {
@@ -171,8 +195,9 @@ class Post
     /**
      * Add a comment to the post.
      *
-     * @param Comment $comment The comment to add.
-     * @return static Returns the current instance for method chaining.
+     * @param Comment $comment The comment to add
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function addComment(Comment $comment): self
     {
@@ -187,8 +212,9 @@ class Post
     /**
      * Remove a comment from the post.
      *
-     * @param Comment $comment The comment to remove.
-     * @return static Returns the current instance for method chaining.
+     * @param Comment $comment The comment to remove
+     *
+     * @return static Returns the current instance for method chaining
      */
     public function removeComment(Comment $comment): self
     {

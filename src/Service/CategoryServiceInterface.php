@@ -14,14 +14,14 @@ interface CategoryServiceInterface
     /**
      * Creates a new category.
      *
-     * @param Category $category The category entity to create.
+     * @param Category $category the category entity to create
      */
     public function createCategory(Category $category): void;
 
     /**
      * Deletes an existing category.
      *
-     * @param Category $category The category entity to delete.
+     * @param Category $category the category entity to delete
      */
     public function deleteCategory(Category $category): void;
 
@@ -35,7 +35,7 @@ interface CategoryServiceInterface
     /**
      * Retrieves all categories.
      *
-     * @return Category[] An array of Category entities.
+     * @return Category[] an array of Category entities
      */
     public function getAllCategories(): array;
 }

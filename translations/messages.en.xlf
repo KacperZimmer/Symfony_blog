@@ -233,6 +233,15 @@
                                                                         <source>post.view.no_categories</source>
                                                                         <target>No categories</target>
                                                                       </trans-unit>
+
+                                   <trans-unit id="category_placeholder">
+                                                  <source>category_placeholder</source>
+                                                  <target>Choose category</target>
+                                              </trans-unit>
+                                              <trans-unit id="search_button">
+                                                  <source>search_button</source>
+                                                  <target>Search</target>
+                                              </trans-unit>
     </body>
   </file>
 </xliff>

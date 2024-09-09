@@ -236,6 +236,15 @@
                                                                         <source>post.view.no_categories</source>
                                                                         <target>Brak kategorii</target>
                                                                       </trans-unit>
+
+           <trans-unit id="category_placeholder">
+                                                           <source>category_placeholder</source>
+                                                           <target>Wybierz kategorie</target>
+                                                       </trans-unit>
+                                                       <trans-unit id="search_button">
+                                                           <source>search_button</source>
+                                                           <target>Szukaj</target>
+                                                       </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the [Blog app] project.
+ *
+ * (c) [2024] [Kacper Zimmer]
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ *
+ * For more information, please view the LICENSE file that was
+ * distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Post;
@@ -22,7 +34,7 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Constructs the repository with the manager registry and Post entity class.
      *
-     * @param ManagerRegistry $registry The manager registry for the entity manager.
+     * @param ManagerRegistry $registry the manager registry for the entity manager
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -32,7 +44,7 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Creates a query builder for fetching all posts.
      *
-     * @return QueryBuilder The query builder for fetching all posts.
+     * @return QueryBuilder the query builder for fetching all posts
      */
     public function queryAll(): QueryBuilder
     {
@@ -43,8 +55,9 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Finds posts by category ID.
      *
-     * @param int $categoryId The ID of the category to filter by.
-     * @return Post[] Returns an array of Post objects.
+     * @param int $categoryId the ID of the category to filter by
+     *
+     * @return Post[] returns an array of Post objects
      */
     public function findByCategory(int $categoryId): array
     {

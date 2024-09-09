@@ -14,14 +14,14 @@ interface CommentServiceInterface
     /**
      * Saves a comment.
      *
-     * @param Comment $comment The comment entity to save.
+     * @param Comment $comment the comment entity to save
      */
     public function saveComment(Comment $comment): void;
 
     /**
      * Deletes a comment.
      *
-     * @param Comment $comment The comment entity to delete.
+     * @param Comment $comment the comment entity to delete
      */
     public function deleteComment(Comment $comment): void;
 }

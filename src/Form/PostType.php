@@ -14,6 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PostType extends AbstractType
 {
+    /**
+     * Builds the form for creating or editing a post.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array $options An array of options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -37,6 +43,11 @@ class PostType extends AbstractType
             ]);
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver used to define the options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -227,6 +227,12 @@
                                                                      <source>post.comments</source>
                                                                      <target>comments</target>
                                                                    </trans-unit>
+
+
+        <trans-unit id="post.view.no_categories">
+                                                                        <source>post.view.no_categories</source>
+                                                                        <target>No categories</target>
+                                                                      </trans-unit>
     </body>
   </file>
 </xliff>

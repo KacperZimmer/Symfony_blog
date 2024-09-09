@@ -45,6 +45,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var array<int, string>
      */
     #[ORM\Column(type: 'json')]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'array')]
     private array $roles = [];
 
     /**
@@ -128,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles; // Assuming $this->roles is an array of strings
+        $roles = $this->roles;
 
         foreach ($roles as $role) {
             if (!is_string($role)) {
@@ -193,45 +195,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
     }
 
     /**
-     * @return Collection<int, Post>
+     * @return string|null
      */
-    public function getGetPosts(): Collection
-    {
-        return $this->getPosts;
-    }
 
-    public function addGetPost(Post $getPost): static
-    {
-        if (!$this->getPosts->contains($getPost)) {
-            $this->getPosts->add($getPost);
-            $getPost->setUserID($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetPost(Post $getPost): static
-    {
-        if ($this->getPosts->removeElement($getPost)) {
-            // set the owning side to null (unless already changed)
-            if ($getPost->getUserID() === $this) {
-                $getPost->setUserID(null);
-            }
-        }
-
-        return $this;
-    }
-
+    /**
+     * Get the plain password.
+     *
+     * @return string|null The plain password or null if not set.
+     */
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
+    /**
+     * Set the plain password.
+     *
+     * @param string|null $plainPassword The plain password to set, or null to unset it.
+     * @return self Returns the current instance for method chaining.
+     */
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;

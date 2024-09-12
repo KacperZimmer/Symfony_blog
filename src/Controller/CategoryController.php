@@ -107,7 +107,9 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, Category $category): Response
     {
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(CategoryType::class, $category, [
+            'method' => 'PUT',
+        ]);
 
         $form->handleRequest($request);
 

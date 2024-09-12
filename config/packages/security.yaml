@@ -1,19 +1,16 @@
 # config/packages/security.yaml
 security:
-    # Hashery haseł
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         App\Entity\User:
             algorithm: auto
 
-    # Źródła użytkowników
     providers:
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
 
-    # Firewall
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -25,23 +22,15 @@ security:
             logout:
                 path: app_logout
                 target: app_login
-            # Włącz kontrolę dostępu do określonych ścieżek
-            # Właściwy sposób skonfigurowania firewalla
-            # Możesz ustawić secure: false, jeśli chcesz pozwolić na dostęp do publicznych stron bez wymagań dotyczących uwierzytelnienia
             security: true
 
-    # Hierarchia ról
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER]
 
-    # Kontrola dostępu
     access_control:
-        - { path: ^/login, roles: PUBLIC_ACCESS }            # Dostęp do strony logowania dla wszystkich
-        - { path: ^/post/\d+$, roles: PUBLIC_ACCESS }        # Dostęp do szczegółów postów dla wszystkich (np. /post/21)
-        - { path: ^/post/, roles: ROLE_USER }                # Dostęp do edycji i dodawania postów wymaga roli ROLE_USER
-        - { path: ^/$, roles: PUBLIC_ACCESS }                # Dostęp do strony głównej dla wszystkich
-        - { path: ^/, roles: ROLE_ADMIN }                    # Wszystkie inne ścieżki wymagają roli ROLE_ADMIN                  # Wszystkie inne ścieżki wymagają roli ROLE_ADMIN
-        # Dostęp do innych stron wymaga roli ROLE_USER
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/post/\d+$, roles: PUBLIC_ACCESS }
+        - { path: ^/post/, roles: ROLE_USER }
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_ADMIN }
 
-    # Inne ustawienia
-    # Można dodać więcej reguł jeśli potrzebujesz specyficznej konfiguracji

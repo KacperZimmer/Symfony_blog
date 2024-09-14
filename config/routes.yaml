@@ -52,7 +52,7 @@ category_new:
 comment_delete:
     path: /comment/delete/{id}
     controller: App\Controller\CommentController::delete
-    methods: [POST]
+    methods: [DELETE]
 
 post_list:
     path: /posts
@@ -62,3 +62,4 @@ post_list:
 admin_edit_user:
     path: /admin/edit-user
     controller: App\Controller\MainPageController::editUser
+    methods: [PUT,GET]

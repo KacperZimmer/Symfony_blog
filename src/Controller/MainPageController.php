@@ -107,7 +107,9 @@ class MainPageController extends AbstractController
             throw $this->createAccessDeniedException('Access denied.');
         }
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'method' => 'PUT',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

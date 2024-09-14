@@ -122,7 +122,6 @@ class MainPageController extends AbstractController
 
             $this->userService->updateUser($user);
 
-            $this->addFlash('success', 'Dane użytkownika zostały zaktualizowane.');
 
             return $this->redirectToRoute('main_page');
         }

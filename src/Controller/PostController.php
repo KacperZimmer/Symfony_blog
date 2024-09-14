@@ -140,7 +140,9 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $post, [
+            'method' => 'PUT',
+        ]);
 
         $form->handleRequest($request);
 
@@ -157,6 +159,7 @@ class PostController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * Lists all posts with optional category filtering and pagination.

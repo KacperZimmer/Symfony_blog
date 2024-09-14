@@ -80,15 +80,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @var Collection<int, Post>
      */
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'UserID', orphanRemoval: true)]
-    private Collection $getPosts;
 
     /**
      * Constructor to initialize collections.
      */
     public function __construct()
     {
-        $this->getPosts = new ArrayCollection();
     }
 
     /**

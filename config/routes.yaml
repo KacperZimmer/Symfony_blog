@@ -28,7 +28,7 @@ post_delete:
 post_edit:
     path: /post/{id}/edit
     controller: App\Controller\PostController::edit
-    methods: [GET, POST]
+    methods: [GET, PUT]
 
 category_list:
     path: /categories

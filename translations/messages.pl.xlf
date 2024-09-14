@@ -245,6 +245,13 @@
                                                            <source>search_button</source>
                                                            <target>Szukaj</target>
                                                        </trans-unit>
+
+        <trans-unit id="form.label.category">
+                                                                                                     <source>form.label.category</source>
+                                                                                                     <target>Kategorie</target>
+                                                                                                 </trans-unit>
+
+
     </body>
   </file>
 </xliff>

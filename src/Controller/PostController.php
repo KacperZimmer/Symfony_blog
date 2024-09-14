@@ -16,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller for managing blog posts.
@@ -140,7 +139,9 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $post, [
+            'method' => 'PUT',
+        ]);
 
         $form->handleRequest($request);
 
@@ -157,6 +158,8 @@ class PostController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
 
     /**
      * Lists all posts with optional category filtering and pagination.

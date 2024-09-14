@@ -89,7 +89,6 @@ class CategoryController extends AbstractController
         if ($this->isCsrfTokenValid('delete-category'.$category->getId(), $request->request->get('_token'))) {
             $this->categoryService->deleteCategory($category);
 
-            $this->addFlash('success', 'Kategoria została usunięta pomyślnie.');
         }
 
         return $this->redirectToRoute('category_list');
@@ -107,7 +106,9 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, Category $category): Response
     {
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(CategoryType::class, $category, [
+            'method' => 'PUT',
+        ]);
 
         $form->handleRequest($request);
 

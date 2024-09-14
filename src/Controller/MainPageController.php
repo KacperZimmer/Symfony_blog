@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -98,7 +99,7 @@ class MainPageController extends AbstractController
      *
      * @return Response The rendered form for editing the user or redirect to the main page
      */
-    public function editUser(Request $request): Response
+    public function editUser(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = $this->getUser();
 
@@ -106,13 +107,23 @@ class MainPageController extends AbstractController
             throw $this->createAccessDeniedException('Access denied.');
         }
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'method' => 'PUT',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('plainPassword')->getData()) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $form->get('plainPassword')->getData());
+                $user->setPassword($hashedPassword);
+
+
+                $user->eraseCredentials();
+            }
+
             $this->userService->updateUser($user);
 
-            $this->addFlash('success', 'Dane użytkownika zostały zaktualizowane.');
 
             return $this->redirectToRoute('main_page');
         }
@@ -121,4 +132,6 @@ class MainPageController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
 }

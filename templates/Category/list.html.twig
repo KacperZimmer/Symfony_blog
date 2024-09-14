@@ -42,10 +42,12 @@
                             <h5 class="card-title">{{ category.name }}</h5>
                             <div class="btn-group" role="group">
                                 <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-secondary">{{ 'category.edit'|trans }}</a>
-                                <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" onsubmit="return confirm('{{ 'category.delete_confirmation'|trans }}');" style="display:inline-block;">
+                                <form method="post" action="{{ path('category_delete', {'id': category.id}) }}" style="display:inline-block;">
+                                    <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete-category' ~ category.id) }}">
                                     <button class="btn btn-danger" type="submit">{{ 'category.delete'|trans }}</button>
                                 </form>
+
                             </div>
                         </div>
                     </div>

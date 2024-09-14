@@ -55,9 +55,11 @@
                                 <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_comment'|trans }}');" style="display:inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
                                         <button class="btn btn-danger btn-sm ml-2" type="submit">{{ 'button.delete'|trans }}</button>
                                     </form>
+
                                 {% endif %}
                             </li>
                         {% endfor %}

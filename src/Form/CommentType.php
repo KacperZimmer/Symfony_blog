@@ -47,6 +47,7 @@ class CommentType extends AbstractType
                     new Assert\NotBlank(),
                     new Assert\Email(),
                 ],
+                'required' => true,
             ])
             ->add('nick', TextType::class, [
                 'label' => 'form.label.nick',
@@ -57,6 +58,7 @@ class CommentType extends AbstractType
                         'max' => 50,
                     ]),
                 ],
+                'required' => true,
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'form.label.content',
@@ -67,6 +69,7 @@ class CommentType extends AbstractType
                         'max' => 500,
                     ]),
                 ],
+                'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'button.add_comment',

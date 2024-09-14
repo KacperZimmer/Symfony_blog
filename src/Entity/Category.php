@@ -50,7 +50,7 @@ class Category
      *
      * @var Collection<int, Post>
      */
-    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'categories', fetch: 'EXTRA_LAZY')]
     private Collection $posts;
 
     /**

@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setEmail('admin@example.com');
         $user->setRoles(['ROLE_ADMIN']);
-        $user->setPassword('$2a$12$S2F1s55bpVC1cXnqvTWOlO7/6vSXX1SSBykVbyQbL.m2b8vCAxXlG'); // Predefined password (encoded)
+        $user->setPassword('$2a$12$G30zlZQH3R6tudhDvOIvGOr.N9RwTKlH08tJ1IOIg/FfNhSeMh2hq');
 
         $manager->persist($user);
 

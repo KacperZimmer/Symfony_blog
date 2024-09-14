@@ -248,6 +248,20 @@
                                                                                                 <source>form.label.category</source>
                                                                                                 <target>Categories</target>
                                                                                             </trans-unit>
+               <trans-unit id="login.title">
+                   <source>login.title</source>
+                   <target>Login Title</target>
+               </trans-unit>
+               <trans-unit id="login.logged_in_as">
+                   <source>login.logged_in_as</source>
+                   <target>Logged in as</target>
+               </trans-unit>
+               <trans-unit id="title.edit_user">
+                   <source>title.edit_user</source>
+                   <target>Edit User</target>
+               </trans-unit>
+
+
     </body>
   </file>
 </xliff>

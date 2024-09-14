@@ -48,6 +48,7 @@ class CategoryType extends AbstractType
                         'max' => 50,
                     ]),
                 ],
+                'required' => true,
             ]);
     }
 

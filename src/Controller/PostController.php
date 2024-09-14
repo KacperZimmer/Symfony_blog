@@ -8,14 +8,15 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
 use App\Form\PostType;
-use App\Repository\CategoryRepository;
-use App\Repository\PostRepository;
+use App\Service\CategoryServiceInterface;
 use App\Service\CommentServiceInterface;
+use App\Service\PostService;
 use App\Service\PostServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller for managing blog posts.
@@ -24,20 +25,20 @@ class PostController extends AbstractController
 {
     private PostServiceInterface $postService;
     private CommentServiceInterface $commentService;
-    private CategoryRepository $categoryRepository;
+    private CategoryServiceInterface $categoryService;
 
     /**
      * PostController constructor.
      *
-     * @param PostServiceInterface    $postService        The post service for handling post operations
-     * @param CommentServiceInterface $commentService     The comment service for handling comment operations
-     * @param CategoryRepository      $categoryRepository The repository for fetching categories
+     * @param PostServiceInterface     $postService     The post service for handling post operations
+     * @param CommentServiceInterface  $commentService  The comment service for handling comment operations
+     * @param CategoryServiceInterface $categoryService The service for fetching categories
      */
-    public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryRepository $categoryRepository)
+    public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryServiceInterface $categoryService)
     {
         $this->postService = $postService;
         $this->commentService = $commentService;
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -66,10 +67,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
         }
 
-        return $this->render('post/show.html.twig', [
-            'post' => $post,
-            'commentForm' => $form->createView(),
-        ]);
+        return $this->render('post/show.html.twig', ['post' => $post, 'commentForm' => $form->createView(), ]);
     }
 
     /**
@@ -159,8 +157,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-
     /**
      * Lists all posts with optional category filtering and pagination.
      *
@@ -173,15 +169,15 @@ class PostController extends AbstractController
      */
     public function list(Request $request, PaginatorInterface $paginator): Response
     {
-        $categories = $this->categoryRepository->findAll();
+        $categories = $this->categoryService->getAllCategories();
 
         $selectedCategory = $request->query->get('category');
-        $query = $this->postService->getAllPosts($selectedCategory);
+        $query = $this->postService->getQueryBuilderForAllPosts($selectedCategory)->getQuery();
 
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            PostRepository::PAGINATOR_ITEMS_PER_PAGE
+            PostService::PAGINATOR_ITEMS_PER_PAGE
         );
 
         return $this->render('post/list.html.twig', [

@@ -54,12 +54,7 @@
                             <li class="list-group-item">
                                 <strong>{{ comment.nick }}</strong> ({{ comment.email }}): {{ comment.content }}
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_comment'|trans }}');" style="display:inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
-                                        <button class="btn btn-danger btn-sm ml-2" type="submit">{{ 'button.delete'|trans }}</button>
-                                    </form>
-
+                                    {% include 'post/delete_comment_form.html.twig' with { 'comment': comment } %}
                                 {% endif %}
                             </li>
                         {% endfor %}
@@ -71,10 +66,7 @@
                 <div class="mb-4">
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-secondary mr-2">{{ 'button.edit'|trans }}</a>
-                        <form method="post" action="{{ path('post_delete', {'id': post.id}) }}" onsubmit="return confirm('{{ 'confirm.delete_post'|trans }}');" style="display:inline-block;">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-                            <button class="btn btn-danger" type="submit">{{ 'button.delete'|trans }}</button>
-                        </form>
+                        {% include 'post/delete_post_form.html.twig' with { 'post': post } %}
                     {% endif %}
                     <a href="{{ path('main_page') }}" class="btn btn-primary">{{ 'button.return_to_list'|trans }}</a>
                 </div>

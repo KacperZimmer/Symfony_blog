@@ -251,6 +251,19 @@
                                                                                                      <target>Kategorie</target>
                                                                                                  </trans-unit>
 
+<trans-unit id="login.title">
+                <source>login.title</source>
+                <target>Logowanie</target>
+            </trans-unit>
+            <trans-unit id="login.logged_in_as">
+                <source>login.logged_in_as</source>
+                <target>Zalogowany jako</target>
+            </trans-unit>
+            <trans-unit id="title.edit_user">
+                <source>title.edit_user</source>
+                <target>Edytuj użytkownika</target>
+            </trans-unit>
+
 
     </body>
   </file>

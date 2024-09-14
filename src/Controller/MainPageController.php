@@ -6,11 +6,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\CategoryRepository;
-use App\Repository\PostRepository;
+use App\Service\CategoryServiceInterface;
+use App\Service\PostService;
 use App\Service\PostServiceInterface;
 use App\Service\UserServiceInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,22 +24,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MainPageController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
     private UserServiceInterface $userService;
     private PostServiceInterface $postService;
+    private CategoryServiceInterface $categoryService;
 
     /**
      * MainPageController constructor.
      *
-     * @param EntityManagerInterface $entityManager The entity manager for database interactions
-     * @param UserServiceInterface   $userService   The user service for user-related operations
-     * @param PostServiceInterface   $postService   The post service for post-related operations
+     * @param UserServiceInterface     $userService     The user service for user-related operations
+     * @param PostServiceInterface     $postService     The post service for post-related operations
+     * @param CategoryServiceInterface $categoryService The service for fetching categories
      */
-    public function __construct(EntityManagerInterface $entityManager, UserServiceInterface $userService, PostServiceInterface $postService)
+    public function __construct(UserServiceInterface $userService, PostServiceInterface $postService, CategoryServiceInterface $categoryService)
     {
-        $this->entityManager = $entityManager;
         $this->userService = $userService;
         $this->postService = $postService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -48,15 +47,14 @@ class MainPageController extends AbstractController
      *
      * @Route("/", name="main_page")
      *
-     * @param Request            $request            The HTTP request object
-     * @param CategoryRepository $categoryRepository The repository for fetching categories
-     * @param PaginatorInterface $paginator          The paginator for handling pagination
+     * @param Request            $request   The HTTP request object
+     * @param PaginatorInterface $paginator The paginator for handling pagination
      *
      * @return Response The rendered main page with the list of posts
      */
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        $categories = $categoryRepository->findAll();
+        $categories = $this->categoryService->getAllCategories();
         $categoryChoices = [];
 
         foreach ($categories as $category) {
@@ -82,7 +80,7 @@ class MainPageController extends AbstractController
 
         $query = $queryBuilder->getQuery();
 
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), PostRepository::PAGINATOR_ITEMS_PER_PAGE);
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), PostService::PAGINATOR_ITEMS_PER_PAGE);
 
         return $this->render('main_page.html.twig', [
             'pagination' => $pagination,
@@ -95,7 +93,8 @@ class MainPageController extends AbstractController
      *
      * @Route("/admin/user/edit", name="admin_user_edit")
      *
-     * @param Request $request The HTTP request object
+     * @param Request                     $request        The HTTP request object
+     * @param UserPasswordHasherInterface $passwordHasher The password hasher for hashing passwords
      *
      * @return Response The rendered form for editing the user or redirect to the main page
      */
@@ -113,17 +112,14 @@ class MainPageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($form->get('plainPassword')->getData()) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $form->get('plainPassword')->getData());
                 $user->setPassword($hashedPassword);
-
 
                 $user->eraseCredentials();
             }
 
             $this->userService->updateUser($user);
-
 
             return $this->redirectToRoute('main_page');
         }
@@ -132,6 +128,4 @@ class MainPageController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
 }

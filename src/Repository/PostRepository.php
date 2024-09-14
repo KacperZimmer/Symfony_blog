@@ -29,7 +29,6 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Number of items per page for pagination.
      */
-    public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * Constructs the repository with the manager registry and Post entity class.
@@ -49,24 +48,7 @@ class PostRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('p')
+            ->select('p.id, p.title, p.content')
             ->orderBy('p.id', 'DESC');
-    }
-
-    /**
-     * Finds posts by category ID.
-     *
-     * @param int $categoryId the ID of the category to filter by
-     *
-     * @return Post[] returns an array of Post objects
-     */
-    public function findByCategory(int $categoryId): array
-    {
-        return $this->createQueryBuilder('p')
-            ->join('p.categories', 'c')
-            ->where('c.id = :categoryId')
-            ->setParameter('categoryId', $categoryId)
-            ->orderBy('p.id', 'DESC') // Corrected line: using 'p' instead of 'post'
-            ->getQuery()
-            ->getResult();
     }
 }

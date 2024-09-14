@@ -1,0 +1,6 @@
+{# templates/category/delete_form.html.twig #}
+<form method="post" action="{{ path('category_delete', {'id': category.id}) }}" style="display:inline-block;">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete-category' ~ category.id) }}">
+    <button class="btn btn-danger" type="submit">{{ 'category.delete'|trans }}</button>
+</form>

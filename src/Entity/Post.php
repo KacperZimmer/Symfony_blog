@@ -57,7 +57,7 @@ class Post
      *
      * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinTable(name: 'post_category')]
     private Collection $categories;
 
@@ -66,7 +66,7 @@ class Post
      *
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', cascade: ['persist', 'remove'], fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     private Collection $comments;
 
     /**

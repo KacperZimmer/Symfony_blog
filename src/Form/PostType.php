@@ -41,16 +41,7 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                'label' => 'form.label.title',
-                'attr' => ['placeholder' => 'form.placeholder.title'],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length([
-                        'max' => 50,
-                    ]),
-                ],
-            ])
+            ->add('title', TextType::class, ['label' => 'form.label.title', 'attr' => ['placeholder' => 'form.placeholder.title'], 'constraints' => [new Assert\NotBlank(), new Assert\Length(['max' => 50, ]), ], 'required' => true, ])
             ->add('content', TextareaType::class, [
                 'label' => 'form.label.content',
                 'attr' => ['placeholder' => 'form.placeholder.content'],
@@ -60,6 +51,7 @@ class PostType extends AbstractType
                         'max' => 2000,
                     ]),
                 ],
+                'required' => true,
             ])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
@@ -67,6 +59,7 @@ class PostType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'label' => 'form.label.categories',
+                'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'form.button.save',

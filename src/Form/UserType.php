@@ -54,7 +54,6 @@ class UserType extends AbstractType
                 'constraints' => [
                     new Assert\Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
                     ]),
                 ],
             ])

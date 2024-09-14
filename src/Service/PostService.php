@@ -15,6 +15,7 @@ use Doctrine\ORM\QueryBuilder;
  */
 class PostService implements PostServiceInterface
 {
+    public const PAGINATOR_ITEMS_PER_PAGE = 10;
     private PostRepository $postRepository;
     private EntityManagerInterface $entityManager;
 

@@ -25,7 +25,7 @@ post_delete:
     controller: App\Controller\PostController::delete
     methods: [POST, DELETE]
 
-post_edit:
+post_edit: #done
     path: /post/{id}/edit
     controller: App\Controller\PostController::edit
     methods: [GET, PUT]
@@ -35,14 +35,14 @@ category_list:
     controller: App\Controller\CategoryController::list
 
 category_edit:
-    path: /category/{id}/edit
+    path: /category/{id}/edit #done
     controller: App\Controller\CategoryController::edit
     methods: [GET,PUT]
 
 category_delete:
     path: /category/{id}/delete
     controller: App\Controller\CategoryController::delete
-    methods: [POST, DELETE]
+    methods: [DELETE]
 
 category_new:
     path: /category/news

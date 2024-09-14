@@ -16,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller for managing blog posts.
@@ -159,6 +158,7 @@ class PostController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
 
     /**

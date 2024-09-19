@@ -10,7 +10,7 @@ use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Controller for managing categories.
@@ -23,8 +23,9 @@ class CategoryController extends AbstractController
      * CategoryController constructor.
      *
      * @param CategoryServiceInterface $categoryService The service for handling category operations
+     * @param TranslatorInterface      $translator      The translator service for handling translations
      */
-    public function __construct(CategoryServiceInterface $categoryService)
+    public function __construct(CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
         $this->categoryService = $categoryService;
     }
@@ -48,7 +49,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->createCategory($category);
 
-            $this->addFlash('success', 'Kategoria została dodana pomyślnie.');
+            $this->addFlash('success', $this->translator->trans('category.created.flash'));
 
             return $this->redirectToRoute('category_list');
         }
@@ -61,6 +62,7 @@ class CategoryController extends AbstractController
     /**
      * Lists all categories.
      *
+     * @Route("/categories", name="category_list")
      * @Route("/categories", name="category_list")
      *
      * @return Response The rendered list of categories
@@ -88,6 +90,7 @@ class CategoryController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete-category'.$category->getId(), $request->request->get('_token'))) {
             $this->categoryService->deleteCategory($category);
+            $this->addFlash('success', $this->translator->trans('category.deleted.flash'));
         }
 
         return $this->redirectToRoute('category_list');
@@ -114,7 +117,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->updateCategory($category);
 
-            $this->addFlash('success', 'Kategoria została zaktualizowana pomyślnie.');
+            $this->addFlash('success', $this->translator->trans('category.updated.flash'));
 
             return $this->redirectToRoute('category_list');
         }

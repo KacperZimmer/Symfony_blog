@@ -30,10 +30,10 @@ class PostController extends AbstractController
     /**
      * PostController constructor.
      *
-     * @param PostServiceInterface $postService The post service to handle post operations
-     * @param CommentServiceInterface $commentService The comment service to handle comment operations
+     * @param PostServiceInterface     $postService     The post service to handle post operations
+     * @param CommentServiceInterface  $commentService  The comment service to handle comment operations
      * @param CategoryServiceInterface $categoryService The category service to handle category operations
-     * @param TranslatorInterface $translator The translator service for handling translations
+     * @param TranslatorInterface      $translator      The translator service for handling translations
      */
     public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
@@ -68,7 +68,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
         }
 
-        return $this->render('post/show.html.twig', ['post' => $post, 'commentForm' => $form->createView(), ]);
+        return $this->render('post/show.html.twig', ['post' => $post, 'commentForm' => $form->createView()]);
     }
 
     /**

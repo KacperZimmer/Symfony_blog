@@ -123,8 +123,8 @@ class MainPageController extends AbstractController
             $this->userService->updateUser($user);
 
             $this->addFlash('success', $this->translator->trans('user.edit.flash'));
-            return $this->redirectToRoute('main_page');
 
+            return $this->redirectToRoute('main_page');
         }
 
         return $this->render('user/edit.html.twig', [

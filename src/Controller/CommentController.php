@@ -23,7 +23,7 @@ class CommentController extends AbstractController
      * CommentController constructor.
      *
      * @param CommentServiceInterface $commentService The comment service to handle comment operations
-     * @param TranslatorInterface $translator The translator service for handling translations
+     * @param TranslatorInterface     $translator     The translator service for handling translations
      */
     public function __construct(CommentServiceInterface $commentService, private readonly TranslatorInterface $translator)
     {

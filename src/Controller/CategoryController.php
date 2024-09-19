@@ -23,6 +23,7 @@ class CategoryController extends AbstractController
      * CategoryController constructor.
      *
      * @param CategoryServiceInterface $categoryService The service for handling category operations
+     * @param TranslatorInterface      $translator      The translator service for handling translations
      */
     public function __construct(CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
@@ -89,7 +90,7 @@ class CategoryController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete-category'.$category->getId(), $request->request->get('_token'))) {
             $this->categoryService->deleteCategory($category);
-            $this->addFlash('success',$this->translator->trans('category.deleted.flash'));
+            $this->addFlash('success', $this->translator->trans('category.deleted.flash'));
         }
 
         return $this->redirectToRoute('category_list');

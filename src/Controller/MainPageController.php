@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Controller for handling the main page and user-related actions.
@@ -34,8 +35,9 @@ class MainPageController extends AbstractController
      * @param UserServiceInterface     $userService     The user service for user-related operations
      * @param PostServiceInterface     $postService     The post service for post-related operations
      * @param CategoryServiceInterface $categoryService The service for fetching categories
+     * @param TranslatorInterface      $translator      The translator service for handling translations
      */
-    public function __construct(UserServiceInterface $userService, PostServiceInterface $postService, CategoryServiceInterface $categoryService)
+    public function __construct(UserServiceInterface $userService, PostServiceInterface $postService, CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
         $this->userService = $userService;
         $this->postService = $postService;
@@ -118,10 +120,11 @@ class MainPageController extends AbstractController
 
                 $user->eraseCredentials();
             }
-
             $this->userService->updateUser($user);
 
+            $this->addFlash('success', $this->translator->trans('user.edit.flash'));
             return $this->redirectToRoute('main_page');
+
         }
 
         return $this->render('user/edit.html.twig', [

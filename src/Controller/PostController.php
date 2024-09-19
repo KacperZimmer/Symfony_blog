@@ -16,7 +16,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Controller for managing blog posts.
@@ -30,11 +30,12 @@ class PostController extends AbstractController
     /**
      * PostController constructor.
      *
-     * @param PostServiceInterface     $postService     The post service for handling post operations
-     * @param CommentServiceInterface  $commentService  The comment service for handling comment operations
-     * @param CategoryServiceInterface $categoryService The service for fetching categories
+     * @param PostServiceInterface $postService The post service to handle post operations
+     * @param CommentServiceInterface $commentService The comment service to handle comment operations
+     * @param CategoryServiceInterface $categoryService The category service to handle category operations
+     * @param TranslatorInterface $translator The translator service for handling translations
      */
-    public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryServiceInterface $categoryService)
+    public function __construct(PostServiceInterface $postService, CommentServiceInterface $commentService, CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
         $this->postService = $postService;
         $this->commentService = $commentService;
@@ -62,7 +63,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->commentService->saveComment($comment);
 
-            $this->addFlash('success', 'Comment added successfully.');
+            $this->addFlash('success', $this->translator->trans('comment.success.flash'));
 
             return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
         }
@@ -94,7 +95,7 @@ class PostController extends AbstractController
 
             $this->postService->savePost($post);
 
-            $this->addFlash('success', 'Post został utworzony pomyślnie.');
+            $this->addFlash('success', $this->translator->trans('post.created.flash'));
 
             return $this->redirectToRoute('main_page');
         }
@@ -107,7 +108,7 @@ class PostController extends AbstractController
     /**
      * Deletes a post.
      *
-     * @Route("/post/delete/{id}", name="post_delete", methods={"POST"})
+     * @Route("/post/delete/{id}", name="post_delete", methods={"DELETE"})
      *
      * @param Request $request The HTTP request object
      * @param Post    $post    The post entity to delete
@@ -119,7 +120,7 @@ class PostController extends AbstractController
         if ($this->isCsrfTokenValid('delete-post'.$post->getId(), $request->request->get('_token'))) {
             $this->postService->deletePost($post);
 
-            $this->addFlash('success', 'Post został usunięty pomyślnie.');
+            $this->addFlash('success', $this->translator->trans('post.delete.flash'));
         }
 
         return $this->redirectToRoute('main_page');
@@ -146,7 +147,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->updatePost($post);
 
-            $this->addFlash('success', 'Post został zaktualizowany pomyślnie.');
+            $this->addFlash('success', $this->translator->trans('post.edit.flash'));
 
             return $this->redirectToRoute('main_page');
         }

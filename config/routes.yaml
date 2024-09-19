@@ -23,7 +23,7 @@ post_show:
 post_delete:
     path: /post/delete/{id}
     controller: App\Controller\PostController::delete
-    methods: [POST, DELETE]
+    methods: [DELETE]
 
 post_edit: #done
     path: /post/{id}/edit
@@ -52,7 +52,7 @@ category_new:
 comment_delete:
     path: /comment/delete/{id}
     controller: App\Controller\CommentController::delete
-    methods: [DELETE]
+    methods: [DELETE,GET]
 
 post_list:
     path: /posts

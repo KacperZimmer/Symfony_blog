@@ -1,5 +1,7 @@
-{# templates/post/delete_post_form.html.twig #}
-<form method="post" action="{{ path('post_delete', {'id': post.id}) }}"  style="display:inline-block;">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete-post' ~ post.id) }}">
-    <button class="btn btn-danger" type="submit">{{ 'button.delete'|trans }}</button>
-</form>
+{% include 'default/form.html.twig' with {
+    'action': path('post_delete', {'id': post.id}),
+    'form_id': 'delete-form-' ~ post.id,
+    'csrf_token': csrf_token('delete-post' ~ post.id),
+    'button_text': 'button.delete'|trans,
+    'method': 'DELETE'
+} %}

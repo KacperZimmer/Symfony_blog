@@ -1,6 +1,8 @@
 {# templates/post/delete_comment_form.html.twig #}
-<form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" style="display:inline-block;">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete-comment' ~ comment.id) }}">
-    <button class="btn btn-danger btn-sm ml-2" type="submit">{{ 'button.delete'|trans }}</button>
-</form>
+{% include 'default/form.html.twig' with {
+    'action': path('comment_delete', {'id': comment.id}),
+    'form_id': 'delete-form-' ~ comment.id,
+    'csrf_token': csrf_token('delete-comment' ~ comment.id),
+    'button_text': 'button.delete'|trans,
+    'method': 'DELETE'
+} %}

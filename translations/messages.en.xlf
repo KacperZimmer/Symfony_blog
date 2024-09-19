@@ -261,7 +261,65 @@
                    <target>Edit User</target>
                </trans-unit>
 
+                <trans-unit id="category.created.flash">
+                                  <source>category.created.flash</source>
+                                  <target>Category was created</target>
+                              </trans-unit>
+   <trans-unit id="category.deleted.flash">
+                                  <source>category.deleted.flash</source>
+                                  <target>Category was deleted</target>
+                              </trans-unit>
 
+
+<trans-unit id="category.updated.flash">
+                                   <source>category.updated.flash</source>
+                                   <target>Category was edited</target>
+                               </trans-unit>
+
+<trans-unit id="comment.delete.flash">
+                                   <source>comment.delete.flash</source>
+                                   <target>Comment was deleted</target>
+                               </trans-unit>
+
+<trans-unit id="user.edit.flash">
+                                   <source>user.edit.flash</source>
+                                   <target>User was edited</target>
+                               </trans-unit>
+
+<trans-unit id="comment.success.flash">
+                                   <source>comment.success.flash</source>
+                                   <target>Comment was added</target>
+                               </trans-unit>
+<trans-unit id="post.created.flash">
+                                   <source>post.created.flash</source>
+                                   <target>Post was added</target>
+                               </trans-unit>
+
+<trans-unit id="post.delete.flash">
+                                   <source>post.delete.flash</source>
+                                   <target>Post was deleted</target>
+                               </trans-unit>
+<trans-unit id="post.edit.flash">
+                                   <source>post.edit.flash</source>
+                                   <target>Post was edited</target>
+                               </trans-unit>
+<trans-unit id="confirm.title">
+                                   <source>confirm.title</source>
+                                   <target>Changes are irreversible</target>
+                               </trans-unit>
+
+<trans-unit id="confirm.text">
+                                   <source>confirm.text</source>
+                                   <target>Choose option</target>
+                               </trans-unit>
+<trans-unit id="confirm.confirm">
+                                   <source>confirm.confirm</source>
+                                   <target>Delete</target>
+                               </trans-unit>
+<trans-unit id="confirm.cancel">
+                                   <source>confirm.cancel</source>
+                                   <target>Cancel</target>
+                               </trans-unit>
     </body>
   </file>
 </xliff>
